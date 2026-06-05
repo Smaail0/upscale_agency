@@ -1,0 +1,1185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Upscale Agency | Ecommerce Video & UGC</title>
+  <meta name="description" content="Ecommerce ads, UGC videos, and product content built to help brands sell online.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f6f4ef;
+      --muted: #b9c3c9;
+      --navy: #052741;
+      --navy-2: #0b3753;
+      --teal: #42d6c3;
+      --coral: #ff8a66;
+      --lime: #d5f36f;
+      --violet: #8d7cff;
+      --gold: #ffc45c;
+      --paper: #fffaf0;
+      --line: rgba(255, 255, 255, 0.14);
+      --panel: rgba(255, 255, 255, 0.075);
+      --shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(66, 214, 195, 0.26), transparent 30vw),
+        radial-gradient(circle at 84% 8%, rgba(141, 124, 255, 0.34), transparent 34vw),
+        radial-gradient(circle at 78% 76%, rgba(255, 138, 102, 0.22), transparent 36vw),
+        linear-gradient(120deg, #041b2e 0%, #071d2a 42%, #120d2c 100%);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -20%;
+      z-index: -2;
+      background:
+        conic-gradient(from 120deg at 50% 50%, rgba(66, 214, 195, 0.2), transparent 18%, rgba(255, 196, 92, 0.18), transparent 42%, rgba(141, 124, 255, 0.22), transparent 72%, rgba(255, 138, 102, 0.16));
+      filter: blur(74px);
+      animation: atmosphere 18s ease-in-out infinite alternate;
+      opacity: 0.8;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent 82%);
+    }
+
+    @keyframes atmosphere {
+      from {
+        transform: rotate(0deg) scale(1);
+      }
+
+      to {
+        transform: rotate(18deg) scale(1.12);
+      }
+    }
+
+    @keyframes floatUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 28px rgba(66, 214, 195, 0.24), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+      }
+
+      50% {
+        box-shadow: 0 0 54px rgba(141, 124, 255, 0.34), inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .site-shell {
+      width: min(1280px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(20px);
+      background: linear-gradient(90deg, rgba(5, 39, 65, 0.74), rgba(18, 13, 44, 0.58));
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      background: var(--paper);
+      border-radius: 50%;
+      padding: 7px;
+      color: var(--navy);
+      flex: 0 0 auto;
+      box-shadow: 0 0 28px rgba(66, 214, 195, 0.38);
+    }
+
+    .brand-logo svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      padding: 10px 12px;
+      border-radius: 999px;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .button {
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--lime), var(--teal));
+      color: var(--navy);
+      min-height: 44px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 14px 38px rgba(66, 214, 195, 0.22);
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 54px rgba(213, 243, 111, 0.32);
+    }
+
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--ink);
+    }
+
+    .button.secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      align-items: center;
+      padding: 64px 0 36px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(360px, 0.82fr) minmax(520px, 1.18fr);
+      gap: clamp(44px, 5vw, 76px);
+      align-items: center;
+      animation: floatUp 900ms ease both;
+    }
+
+    .hero-grid > :first-child {
+      min-width: 0;
+      max-width: 780px;
+    }
+
+    .eyebrow {
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 13px;
+      font-weight: 800;
+      margin: 0 0 18px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(48px, 5.8vw, 92px);
+      line-height: 0.96;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      max-width: 10.8ch;
+      text-shadow: 0 0 38px rgba(66, 214, 195, 0.2);
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: clamp(17px, 1.4vw, 21px);
+      line-height: 1.55;
+      max-width: 680px;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 46px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      min-height: 92px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      color: var(--ink);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .player-stage {
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04)),
+        rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      min-width: 0;
+      justify-self: end;
+      animation: pulseGlow 4.2s ease-in-out infinite;
+    }
+
+    .hero-player .screen {
+      aspect-ratio: 16 / 9;
+      max-height: min(72vh, 720px);
+    }
+
+    .hero-player {
+      max-width: 760px;
+      justify-self: center;
+    }
+
+    .player-stage::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      background: linear-gradient(120deg, rgba(66, 214, 195, 0.55), transparent 32%, rgba(141, 124, 255, 0.48), transparent 72%, rgba(255, 196, 92, 0.38));
+      opacity: 0.28;
+      mix-blend-mode: screen;
+    }
+
+    .screen {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(66, 214, 195, 0.35), transparent 28%),
+        radial-gradient(circle at 78% 28%, rgba(141, 124, 255, 0.36), transparent 32%),
+        linear-gradient(135deg, rgba(255, 196, 92, 0.16), transparent 42%),
+        #061824;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .screen iframe,
+    .screen video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: none;
+      background: #000;
+    }
+
+    .screen.is-drive iframe,
+    .screen.is-direct video {
+      display: block;
+    }
+
+    .placeholder-reel {
+      position: absolute;
+      inset: 28px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 10px;
+      opacity: 0.88;
+    }
+
+    .frame {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent),
+        rgba(255, 255, 255, 0.045);
+      min-height: 70px;
+      animation: floatUp 900ms ease both;
+    }
+
+    .frame:nth-child(3n) {
+      background:
+        linear-gradient(135deg, rgba(213, 243, 111, 0.18), transparent),
+        rgba(255, 255, 255, 0.05);
+    }
+
+    .play-badge {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 92px;
+      height: 92px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      background: linear-gradient(135deg, rgba(246, 244, 239, 0.96), rgba(213, 243, 111, 0.94));
+      color: var(--navy);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      font-weight: 900;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.3);
+    }
+
+    .player-meta {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .player-meta h2 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .player-meta p {
+      color: var(--muted);
+      margin-bottom: 0;
+      line-height: 1.5;
+    }
+
+    .section {
+      padding: 88px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 44px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .section h2 {
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1;
+      letter-spacing: 0;
+      margin-bottom: 0;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    .portfolio-groups {
+      display: grid;
+      gap: 46px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .video-group {
+      margin-top: 0;
+    }
+
+    .video-group:first-of-type {
+      margin-top: 0;
+    }
+
+    .video-group-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 14px;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .video-group-title::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--lime));
+      box-shadow: 0 0 16px rgba(66, 214, 195, 0.6);
+    }
+
+    .video-card {
+      min-height: 0;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
+        rgba(255, 255, 255, 0.06);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(66, 214, 195, 0.72);
+      background:
+        linear-gradient(145deg, rgba(66, 214, 195, 0.18), rgba(141, 124, 255, 0.1)),
+        rgba(66, 214, 195, 0.1);
+      box-shadow: 0 22px 54px rgba(0, 0, 0, 0.25);
+    }
+
+    .video-embed {
+      position: relative;
+      aspect-ratio: 9 / 16;
+      min-height: 360px;
+      background:
+        radial-gradient(circle at 24% 22%, rgba(213, 243, 111, 0.26), transparent 30%),
+        linear-gradient(135deg, rgba(66, 214, 195, 0.28), transparent 38%),
+        linear-gradient(315deg, rgba(141, 124, 255, 0.24), transparent 36%),
+        #061824;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+    }
+
+    .video-embed.is-horizontal {
+      aspect-ratio: 16 / 9;
+      min-height: 220px;
+    }
+
+    .video-embed iframe,
+    .video-embed video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #000;
+    }
+
+    .video-embed-placeholder {
+      position: absolute;
+      inset: 18px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(213, 243, 111, 0.22), transparent 32%),
+        linear-gradient(135deg, rgba(66, 214, 195, 0.18), transparent 42%),
+        rgba(255, 255, 255, 0.045);
+      color: var(--paper);
+      font-weight: 900;
+      text-align: center;
+      padding: 18px;
+    }
+
+    .video-card-body {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .thumb {
+      aspect-ratio: 16 / 9;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background:
+        radial-gradient(circle at 24% 22%, rgba(213, 243, 111, 0.26), transparent 30%),
+        linear-gradient(135deg, rgba(66, 214, 195, 0.28), transparent 38%),
+        linear-gradient(315deg, rgba(141, 124, 255, 0.24), transparent 36%),
+        #092332;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .video-card h3 {
+      font-size: 22px;
+      margin-bottom: 0;
+    }
+
+    .video-card p {
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 12px;
+      color: var(--navy);
+      background: var(--teal);
+      border-radius: 999px;
+      padding: 7px 9px;
+      font-weight: 800;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .service {
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(155deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035)),
+        var(--panel);
+      padding: 22px;
+      min-height: 190px;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .service:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 196, 92, 0.55);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.22);
+    }
+
+    .service-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--paper);
+      color: var(--navy);
+      margin-bottom: 22px;
+      font-weight: 900;
+    }
+
+    .service h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .service p {
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .price-card {
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(155deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
+        rgba(255, 255, 255, 0.065);
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      min-height: 500px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .price-card.featured {
+      border-color: rgba(213, 243, 111, 0.8);
+      background:
+        linear-gradient(155deg, rgba(213, 243, 111, 0.18), rgba(66, 214, 195, 0.09) 38%, rgba(141, 124, 255, 0.12)),
+        rgba(255, 255, 255, 0.07);
+      box-shadow: 0 0 56px rgba(213, 243, 111, 0.18);
+    }
+
+    .price-label {
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .price-card h3 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      font-size: 44px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .price span {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
+      color: var(--muted);
+      display: grid;
+      gap: 13px;
+      line-height: 1.45;
+    }
+
+    .features li {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 9px;
+    }
+
+    .features li::before {
+      content: "+";
+      color: var(--lime);
+      font-weight: 900;
+    }
+
+    .price-card .button {
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .contact-band {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: center;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 8% 12%, rgba(66, 214, 195, 0.28), transparent 28%),
+        linear-gradient(135deg, rgba(255, 196, 92, 0.18), transparent 38%),
+        linear-gradient(315deg, rgba(141, 124, 255, 0.2), transparent 34%),
+        rgba(255, 255, 255, 0.075);
+      padding: 34px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-band h2 {
+      margin-bottom: 12px;
+    }
+
+    .contact-band p {
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 720px;
+      margin-bottom: 0;
+    }
+
+    footer {
+      padding: 36px 0;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid,
+      .section-head,
+      .contact-band {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid > :first-child {
+        max-width: 760px;
+      }
+
+      h1 {
+        max-width: 11ch;
+      }
+
+      .player-stage {
+        justify-self: stretch;
+      }
+
+      .hero-player {
+        max-width: min(460px, 100%);
+        justify-self: start;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .services {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .site-shell {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .nav {
+        min-height: auto;
+        padding: 14px 0;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      h1 {
+        font-size: clamp(42px, 13vw, 58px);
+        max-width: 10ch;
+      }
+
+      .hero {
+        padding-top: 44px;
+      }
+
+      .hero-grid {
+        gap: 32px;
+      }
+
+      .stats,
+      .services {
+        grid-template-columns: 1fr;
+      }
+
+      .player-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+
+      .contact-band {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="site-shell nav">
+      <a class="brand" href="#top" aria-label="Upscale Studio home">
+        <span class="brand-logo" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" focusable="false">
+            <path fill="currentColor" d="M159.472656 93.433594 159.34375 105.890625 159.21875 93.433594 112.542969 140.109375 112.542969 165.992188 159.34375 119.191406 206.148438 165.992188 206.148438 140.109375Z"/>
+            <path fill="currentColor" d="M179.394531 195.769531C179.394531 200.109375 170.914062 213.386719 158.878906 213.386719 146.839844 213.386719 138.363281 200.109375 138.363281 195.769531L138.363281 157.472656 123.296875 157.472656 123.296875 197.429688C123.296875 202.839844 131.90625 227.554688 158.878906 226.535156 185.851562 227.554688 194.457031 202.839844 194.457031 197.429688L194.457031 157.472656 179.394531 157.472656Z"/>
+          </svg>
+        </span>
+        <span>Upscale Studio</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#tarifs">Tarifs</a>
+        <a href="https://www.instagram.com/upscale_agency.tn/" target="_blank" rel="noopener">Contact</a>
+      </nav>
+      <a class="button" href="https://www.instagram.com/upscale_agency.tn/" target="_blank" rel="noopener">Book a call</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="site-shell hero-grid">
+        <div>
+          <p class="eyebrow">Ecommerce videos that sell the product fast</p>
+          <h1>Turn scrolls into clicks, carts, and customers.</h1>
+          <p class="hero-copy">
+            Upscale creates short-form ads, UGC videos, and product content for ecommerce brands that need stronger hooks, clearer offers, and creatives built for Meta, TikTok, and landing pages.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#work">See the work</a>
+            <a class="button secondary" href="#tarifs">Check packages</a>
+          </div>
+          <div class="stats" aria-label="Agency highlights">
+            <div class="stat"><strong>48h</strong><span>first ad preview</span></div>
+            <div class="stat"><strong>UGC</strong><span>creator-style angles</span></div>
+            <div class="stat"><strong>3x</strong><span>formats for paid social</span></div>
+          </div>
+        </div>
+
+        <aside class="player-stage hero-player" aria-label="Introduction reel">
+          <div class="screen is-drive">
+            <iframe
+              title="Upscale introduction reel"
+              src="https://drive.google.com/file/d/1bWcxRRq218cBvBvLq7ShzB6zuD_FF9Zi/preview"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="player-meta">
+            <div>
+              <h2>Introduction Reel</h2>
+              <p>A quick first look at how Upscale turns product footage and UGC angles into content made for online buyers.</p>
+            </div>
+            <a class="button secondary" href="https://drive.google.com/file/d/1bWcxRRq218cBvBvLq7ShzB6zuD_FF9Zi/view?usp=drive_link" target="_blank" rel="noopener">Open</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="site-shell">
+        <div class="section-head">
+          <h2>Product content built for buyers</h2>
+          <p>Every edit is built around what ecommerce customers need to see quickly: the hook, the product, the proof, the use case, and the reason to click.</p>
+        </div>
+
+        <div class="portfolio-groups" id="videoGrid" aria-label="Portfolio videos"></div>
+
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="site-shell">
+        <div class="section-head">
+          <h2>Built for ecommerce acquisition</h2>
+          <p>From first hook to final export, the content is shaped for paid social, organic reels, product pages, and the buying moments where customers decide.</p>
+        </div>
+
+        <div class="services">
+          <article class="service">
+            <div class="service-icon">01</div>
+            <h3>Short-form ads</h3>
+            <p>Hook-led product ads made for Meta, TikTok, and retargeting campaigns.</p>
+          </article>
+          <article class="service">
+            <div class="service-icon">02</div>
+            <h3>UGC content</h3>
+            <p>Creator-style videos that explain the product naturally and build trust fast.</p>
+          </article>
+          <article class="service">
+            <div class="service-icon">03</div>
+            <h3>Product demos</h3>
+            <p>Clean product-focused edits that show benefits, usage, objections, and proof.</p>
+          </article>
+          <article class="service">
+            <div class="service-icon">04</div>
+            <h3>Creative testing</h3>
+            <p>Monthly content batches for brands that need fresh angles to test and scale.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tarifs">
+      <div class="site-shell">
+        <div class="section-head">
+          <h2>Tarifs</h2>
+          <p>Choose the level of ecommerce content you need now. Each package turns product footage, creator clips, or raw ideas into ads ready to test.</p>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="price-card">
+            <div class="price-label">Starter</div>
+            <h3>UGC Starter</h3>
+            <div class="price">$350 <span>/ project</span></div>
+            <ul class="features">
+              <li>1 UGC-style product video up to 45 seconds</li>
+              <li>Hook, captions, and clean mobile pacing</li>
+              <li>Product benefit and call-to-action framing</li>
+              <li>1 revision round</li>
+              <li>Delivery in vertical format</li>
+            </ul>
+            <a class="button secondary" href="https://www.instagram.com/upscale_agency.tn/" target="_blank" rel="noopener">Start here</a>
+          </article>
+
+          <article class="price-card featured">
+            <div class="price-label">Most requested</div>
+            <h3>Ad Testing Pack</h3>
+            <div class="price">$950 <span>/ campaign</span></div>
+            <ul class="features">
+              <li>4 short-form ad creatives for Meta or TikTok</li>
+              <li>Multiple hooks and product angles</li>
+              <li>Captions, punchy pacing, and CTA variants</li>
+              <li>Exports ready for paid social testing</li>
+              <li>2 revision rounds</li>
+            </ul>
+            <a class="button" href="https://www.instagram.com/upscale_agency.tn/" target="_blank" rel="noopener">Request quote</a>
+          </article>
+
+          <article class="price-card">
+            <div class="price-label">Scale</div>
+            <h3>Monthly Retainer</h3>
+            <div class="price">$2,400 <span>/ month</span></div>
+            <ul class="features">
+              <li>8 ecommerce creatives per month</li>
+              <li>UGC, product demos, and ad variations</li>
+              <li>Monthly angle planning</li>
+              <li>Creative testing support</li>
+              <li>Weekly delivery rhythm for fresh ads</li>
+            </ul>
+            <a class="button secondary" href="https://www.instagram.com/upscale_agency.tn/" target="_blank" rel="noopener">Plan growth</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="site-shell">
+        <div class="contact-band">
+          <div>
+            <p class="eyebrow">Ready for better ecommerce creatives?</p>
+            <h2>Send us your product and your goal.</h2>
+            <p>Message Upscale on Instagram with your store, your product, and what you want to improve: more clicks, better trust, stronger ads, or fresh UGC angles.</p>
+          </div>
+          <a class="button" href="https://www.instagram.com/upscale_agency.tn/" target="_blank" rel="noopener">Contact the agency</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="site-shell footer-row">
+      <span>(c) 2026 Upscale Agency. Ecommerce video, UGC, and paid social creatives.</span>
+      <span>Instagram: @upscale_agency.tn</span>
+    </div>
+  </footer>
+
+  <script>
+    const videos = [
+      {
+        group: "Short Form Ad Content",
+        title: "Short Form Ad 01",
+        description: "A fast-paced ecommerce ad built to stop the scroll and move buyers toward the product.",
+        tags: ["Ecom ad", "Meta", "TikTok"],
+        url: "https://drive.google.com/file/d/1uojYJpk7rBnyKGeQCTcoC51uUO8bySGF/view?usp=drive_link"
+      },
+      {
+        group: "Short Form Ad Content",
+        title: "Short Form Ad 02",
+        description: "A mobile-first product ad with a clear angle, clean pacing, and direct offer focus.",
+        tags: ["Product ad", "Testing", "Vertical"],
+        url: "https://drive.google.com/file/d/1e9KFh9EDeVQMBNW08VhcVeh0lExHR7O6/view?usp=drive_link"
+      },
+      {
+        group: "Short Form Ad Content",
+        title: "Short Form Ad 03",
+        description: "A short ad creative designed around the hook, benefit, and reason to click.",
+        tags: ["Hook", "Benefit", "CTA"],
+        url: "https://drive.google.com/file/d/1y71hE4tNZDpnR8zw7t6Q8vef8XbH3itB/view?usp=drive_link"
+      },
+      {
+        group: "Short Form Ad Content",
+        title: "Short Form Ad 04",
+        description: "A conversion-focused ecommerce ad variation built to keep the product clear and the next step obvious.",
+        tags: ["Ecom ad", "Conversion", "Reels"],
+        url: "https://drive.google.com/file/d/1pQZTDtZge0S7fJAs6wJJj7ckEIjHXkjm/view?usp=drive_link"
+      },
+      {
+        group: "Short Form UGC Content",
+        title: "UGC Short 01",
+        description: "A creator-style product short that feels native to the feed and easy to trust.",
+        tags: ["UGC", "Creator", "Product"],
+        url: "https://drive.google.com/file/d/1Ghnh8Chg5iwG6X3Wog6izGBHuwikrKnM/view?usp=drive_link"
+      },
+      {
+        group: "Short Form UGC Content",
+        title: "UGC Short 02",
+        description: "A relatable UGC edit for ecommerce brands that need a more human product angle.",
+        tags: ["UGC", "Ecommerce", "Social proof"],
+        url: "https://drive.google.com/file/d/1zmGOUnryjfYO7FsxKgThxUk5ZJIuaR3Q/view?usp=drive_link"
+      },
+      {
+        group: "Documentaries",
+        title: "Documentary 01",
+        description: "A horizontal long-form product story for brands that need deeper proof, education, or trust-building.",
+        tags: ["Product story", "Trust", "Horizontal"],
+        orientation: "horizontal",
+        url: "https://drive.google.com/file/d/1lQ0gPdZeoIjM7St8CGmWKh8gqns0NSAc/view?usp=drive_link"
+      },
+      {
+        group: "Documentaries",
+        title: "Documentary 02",
+        description: "A longer product-led video for ecommerce audiences that need context before they buy.",
+        tags: ["Education", "Product-led", "Horizontal"],
+        orientation: "horizontal",
+        url: "https://drive.google.com/file/d/1GUy7U_W77SY89lIYZStEBvqgdtzaSu9E/view?usp=drive_link"
+      }
+    ];
+
+    const grid = document.querySelector("#videoGrid");
+
+    function getDriveId(url) {
+      const patterns = [
+        /drive\.google\.com\/file\/d\/([^/]+)/,
+        /drive\.google\.com\/open\?id=([^&]+)/,
+        /drive\.google\.com\/uc\?id=([^&]+)/
+      ];
+
+      for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match) return match[1];
+      }
+
+      return "";
+    }
+
+    function videoSource(url) {
+      const driveId = getDriveId(url);
+      if (driveId) {
+        return {
+          type: "drive",
+          embed: `https://drive.google.com/file/d/${driveId}/preview`,
+          original: url
+        };
+      }
+
+      return {
+        type: "direct",
+        embed: url,
+        original: url
+      };
+    }
+
+    function renderCards() {
+      const groups = [...new Set(videos.map((video) => video.group))];
+
+      grid.innerHTML = groups.map((group) => {
+        const cards = videos
+          .map((video, index) => ({ ...video, index }))
+          .filter((video) => video.group === group)
+          .map((video) => `
+            <article class="video-card" aria-label="${video.title}">
+              ${renderPlayer(video)}
+              <div class="video-card-body">
+                <h3>${video.title}</h3>
+                <p>${video.description}</p>
+                <div class="tag-row">
+                  ${video.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
+                </div>
+                ${video.url ? `<a class="button secondary" href="${video.url}" target="_blank" rel="noopener">Open video</a>` : ""}
+              </div>
+            </article>
+          `).join("");
+
+        return `
+          <section class="video-group" aria-label="${group}">
+            <h3 class="video-group-title">${group}</h3>
+            <div class="video-grid">${cards}</div>
+          </section>
+        `;
+      }).join("");
+    }
+
+    function renderPlayer(video) {
+      const orientationClass = video.orientation === "horizontal" ? " is-horizontal" : "";
+
+      if (!video.url) {
+        return `
+          <div class="video-embed${orientationClass}" aria-hidden="true">
+            <div class="video-embed-placeholder">Coming soon</div>
+          </div>
+        `;
+      }
+
+      const source = videoSource(video.url);
+      if (source.type === "drive") {
+        return `
+          <div class="video-embed${orientationClass}">
+            <iframe title="${video.title}" src="${source.embed}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="video-embed${orientationClass}">
+          <video src="${source.embed}" controls playsinline preload="metadata"></video>
+        </div>
+      `;
+    }
+
+    renderCards();
+  </script>
+</body>
+</html>
