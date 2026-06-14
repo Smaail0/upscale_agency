@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Upscale Agency</title>
+    <meta name="description" content="UGC videos, ads ecommerce, et contenu produit pour brands eli t7eb tbi3 online." />
+    <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320"%3E%3Crect width="320" height="320" rx="64" fill="%23fffaf0"/%3E%3Cpath fill="%2302203e" d="M159.472656 93.433594 159.34375 105.890625 159.21875 93.433594 112.542969 140.109375 112.542969 165.992188 159.34375 119.191406 206.148438 165.992188 206.148438 140.109375Z"/%3E%3Cpath fill="%2302203e" d="M179.394531 195.769531C179.394531 200.109375 170.914062 213.386719 158.878906 213.386719 146.839844 213.386719 138.363281 200.109375 138.363281 195.769531L138.363281 157.472656 123.296875 157.472656 123.296875 197.429688C123.296875 202.839844 131.90625 227.554688 158.878906 226.535156 185.851562 227.554688 194.457031 202.839844 194.457031 197.429688L194.457031 157.472656 179.394531 157.472656Z"/%3E%3C/svg%3E' />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@500;600;700;800;900&display=swap");
+
+      :root {
+        --ink: #f6f4ef;
+        --muted: #b9c3c9;
+        --navy: #052741;
+        --teal: #42d6c3;
+        --lime: #d5f36f;
+        --violet: #8d7cff;
+        --paper: #fffaf0;
+        --line: rgba(255,255,255,0.1);
+        font-family: "Noto Sans Arabic", Tajawal, ui-sans-serif, system-ui, sans-serif;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        background: #080b0e;
+        color: var(--ink);
+        min-height: 100vh;
+        overflow-x: hidden;
+        font-weight: 600;
+      }
+
+      /* ── Noise texture overlay ── */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.04;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 240px 240px;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at 0% 24%, rgba(66,214,195,0.12), transparent 26vw),
+          radial-gradient(circle at 100% 64%, rgba(141,124,255,0.1), transparent 28vw),
+          radial-gradient(circle at 50% 100%, rgba(213,243,111,0.05), transparent 30vw);
+        filter: blur(18px);
+        opacity: 0.42;
+        animation: edgeGlow 14s ease-in-out infinite alternate;
+      }
+
+      @keyframes edgeGlow {
+        0% { opacity: 0.34; transform: translate3d(-10px, 0, 0) scale(1); }
+        50% { opacity: 0.62; transform: translate3d(12px, -8px, 0) scale(1.03); }
+        100% { opacity: 0.42; transform: translate3d(0, 10px, 0) scale(1.01); }
+      }
+
+      /* ── Ambient glow orbs ── */
+      .orbs {
+        position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+      }
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        opacity: 0;
+        animation: orbFloat 20s ease-in-out infinite;
+      }
+      .orb-1 { width: 600px; height: 600px; top: -10%; left: -10%; background: radial-gradient(circle, rgba(66,214,195,0.18), transparent 70%); animation-delay: 0s; }
+      .orb-2 { width: 700px; height: 700px; top: 20%; right: -15%; background: radial-gradient(circle, rgba(141,124,255,0.18), transparent 70%); animation-delay: -7s; }
+      .orb-3 { width: 500px; height: 500px; bottom: 10%; left: 20%; background: radial-gradient(circle, rgba(213,243,111,0.12), transparent 70%); animation-delay: -13s; }
+
+      @keyframes orbFloat {
+        0%   { opacity: 0; transform: translate(0,0) scale(1); }
+        10%  { opacity: 1; }
+        50%  { transform: translate(30px, -40px) scale(1.08); }
+        90%  { opacity: 1; }
+        100% { opacity: 0; transform: translate(0,0) scale(1); }
+      }
+
+      a { color: inherit; text-decoration: none; }
+      button, input, textarea { font: inherit; }
+      .rtl { direction: rtl; unicode-bidi: isolate; text-align: center; }
+
+      .site-shell { width: min(1080px, calc(100% - 40px)); margin: 0 auto; position: relative; z-index: 1; }
+
+      /* ── Topbar ── */
+      .topbar {
+        position: sticky; top: 0; z-index: 50;
+        backdrop-filter: blur(24px) saturate(1.4);
+        background: rgba(8,11,14,0.82);
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+      }
+      .nav {
+        min-height: 68px; display: flex; justify-content: center; align-items: center;
+      }
+      .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 800; }
+      .brand-logo { width: 170px; height: 48px; display: grid; place-items: center; color: var(--paper); }
+      .brand-logo svg { width: 100%; height: 100%; display: block; }
+
+      /* ── Buttons ── */
+      .button {
+        position: relative; overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 999px;
+        background: var(--paper);
+        color: #061824;
+        min-height: 46px; padding: 0 22px;
+        display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+        font-weight: 900; cursor: pointer;
+        transition: transform 220ms cubic-bezier(.34,1.56,.64,1), box-shadow 220ms ease;
+        isolation: isolate;
+      }
+      .button::after {
+        content: '';
+        position: absolute; inset: 0;
+        background: linear-gradient(135deg, rgba(66,214,195,0.18), rgba(213,243,111,0.14));
+        opacity: 0;
+        transition: opacity 220ms ease;
+      }
+      .button:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 0 0 3px rgba(66,214,195,0.2), 0 16px 40px rgba(0,0,0,0.3); }
+      .button:hover::after { opacity: 1; }
+      .button.secondary {
+        background: rgba(255,255,255,0.05); color: var(--ink);
+        border-color: rgba(255,255,255,0.14);
+      }
+      .button.secondary:hover { background: rgba(255,255,255,0.09); box-shadow: 0 0 0 3px rgba(255,255,255,0.06), 0 16px 40px rgba(0,0,0,0.3); }
+
+      /* ── Shimmer on button ── */
+      .button .shimmer {
+        position: absolute; inset: 0; z-index: 1;
+        background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.38) 50%, transparent 60%);
+        background-size: 200% 100%;
+        animation: btnShimmer 3.2s ease infinite;
+        pointer-events: none;
+      }
+      @keyframes btnShimmer {
+        0%   { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+
+      /* ── Hero ── */
+      .hero {
+        padding: 64px 0 88px; text-align: center; position: relative; z-index: 1;
+      }
+      .hero-grid {
+        display: grid; grid-template-columns: 1fr; justify-items: center; gap: 32px;
+      }
+      .hero-copy-block { max-width: 980px; }
+      h1, h2, h3, p { margin-top: 0; }
+      h1 {
+        font-size: clamp(42px, 6.2vw, 76px); line-height: 1.12; font-weight: 900;
+        max-width: 15ch; margin: 0 auto 16px;
+        background: linear-gradient(135deg, #f6f4ef 30%, #42d6c3 75%, #d5f36f 100%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      }
+      h2 { font-weight: 900; }
+      h3 { font-weight: 900; }
+
+      .eyebrow {
+        color: var(--teal); text-transform: uppercase;
+        letter-spacing: 0.12em; font-size: 12px; font-weight: 800;
+        margin: 0 0 16px;
+      }
+      .hero-copy {
+        color: #b8c0c4; font-size: clamp(17px,1.4vw,20px);
+        line-height: 1.58; max-width: 680px; margin: 0 auto 28px;
+      }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; }
+
+      .process-actions {
+        margin-top: 44px;
+      }
+
+      /* ── Player ── */
+      .hero-player {
+        width: min(760px, 100%); max-width: 760px;
+        border-radius: 20px; overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255,255,255,0.04);
+        box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+        position: relative;
+      }
+      /* Animated rainbow border */
+      .hero-player::before {
+        content: '';
+        position: absolute; inset: -1px; z-index: -1; border-radius: 21px;
+        background: conic-gradient(from var(--angle,0deg), var(--teal), var(--lime), var(--violet), var(--navy), var(--teal));
+        animation: rotateBorder 6s linear infinite;
+        opacity: 0.55;
+      }
+      @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+      @keyframes rotateBorder { to { --angle: 360deg; } }
+
+      .screen {
+        aspect-ratio: 16/9; position: relative;
+        background: #040607; border-radius: 20px 20px 0 0;
+      }
+      .screen iframe, .screen video {
+        position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000;
+        border-radius: inherit; display: none;
+      }
+      .screen.is-drive iframe { display: block; }
+      .screen.is-direct video { display: block; }
+
+      /* ── Section base ── */
+      .section {
+        padding: 84px 0;
+        border-top: 1px solid rgba(255,255,255,0.07);
+        position: relative; z-index: 1;
+      }
+      .section-head.centered {
+        display: block; max-width: 780px; margin: 0 auto 44px; text-align: center;
+      }
+      .section-head.centered h2 {
+        font-size: clamp(32px,4.5vw,60px); line-height: 1.02; margin-bottom: 14px;
+      }
+      .section-head.centered p { color: var(--muted); font-size: 17px; line-height: 1.6; }
+
+      /* ── Scroll reveal ── */
+      .reveal {
+        opacity: 0; transform: translateY(28px);
+        transition: opacity 700ms cubic-bezier(.22,1,.36,1), transform 700ms cubic-bezier(.22,1,.36,1);
+      }
+      .reveal.visible { opacity: 1; transform: none; }
+      .reveal-delay-1 { transition-delay: 80ms; }
+      .reveal-delay-2 { transition-delay: 160ms; }
+      .reveal-delay-3 { transition-delay: 240ms; }
+
+      /* ── Portfolio ── */
+      .portfolio-groups { display: grid; gap: 50px; }
+      .video-group-title {
+        display: flex; align-items: center; gap: 12px;
+        justify-content: center; margin: 0 0 22px;
+        color: var(--ink); font-size: 17px; font-weight: 900;
+      }
+      .video-group-title::before {
+        content: ''; width: 34px; height: 2px;
+        background: linear-gradient(90deg, var(--teal), var(--lime));
+        box-shadow: 0 0 14px rgba(66,214,195,0.6);
+      }
+      .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 18px; }
+
+      .video-card {
+        border-radius: 18px; overflow: hidden;
+        background: #0e1317;
+        border: 1px solid rgba(255,255,255,0.09);
+        transition: transform 240ms cubic-bezier(.34,1.56,.64,1), border-color 240ms ease, box-shadow 240ms ease;
+        position: relative;
+      }
+      /* Glow sweep on hover */
+      .video-card::after {
+        content: '';
+        position: absolute; inset: 0; border-radius: 18px;
+        background: linear-gradient(135deg, rgba(66,214,195,0.08), rgba(213,243,111,0.05));
+        opacity: 0; transition: opacity 240ms ease; pointer-events: none;
+      }
+      .video-card:hover { transform: translateY(-6px) scale(1.01); border-color: rgba(66,214,195,0.4); box-shadow: 0 0 0 1px rgba(66,214,195,0.12), 0 20px 50px rgba(0,0,0,0.4); }
+      .video-card:hover::after { opacity: 1; }
+
+      .video-embed {
+        position: relative; aspect-ratio: 9/16; min-height: 340px;
+        background: #050709; overflow: hidden;
+      }
+      .video-embed.is-horizontal { aspect-ratio: 16/9; min-height: 210px; }
+      .video-embed iframe, .video-embed video {
+        position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000;
+      }
+      .tag-row { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 16px; }
+      .tag {
+        font-size: 11px; color: var(--teal);
+        background: rgba(66,214,195,0.1);
+        border: 1px solid rgba(66,214,195,0.18);
+        border-radius: 999px; padding: 5px 10px; font-weight: 800;
+      }
+
+      /* ══════════════════════════════════════
+         PROCESS DIAGRAM — visual map of 3 steps
+         ══════════════════════════════════════ */
+      .process-diagram {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        max-width: 860px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      /* Vertical spine */
+      .process-diagram::before {
+        content: '';
+        position: absolute;
+        top: 52px; bottom: 52px;
+        left: 50%;
+        width: 2px;
+        transform: translateX(-50%);
+        background: linear-gradient(to bottom, var(--teal), var(--violet), var(--lime));
+        opacity: 0.28;
+        border-radius: 2px;
+      }
+
+      .pstep {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 56px 1fr;
+        align-items: start;
+        gap: 0;
+        position: relative;
+      }
+
+      .pstep-left, .pstep-right {
+        padding: 28px;
+        background: #0d1318;
+        border: 1px solid rgba(255,255,255,0.09);
+        border-radius: 18px;
+        display: flex; flex-direction: column; gap: 10px;
+        position: relative;
+        transition: border-color 260ms ease, box-shadow 260ms ease, transform 260ms cubic-bezier(.34,1.56,.64,1);
+      }
+      .pstep-left:hover, .pstep-right:hover {
+        transform: scale(1.025);
+        box-shadow: 0 0 0 1px rgba(66,214,195,0.2), 0 16px 42px rgba(0,0,0,0.35);
+      }
+      /* step 1 card: teal */
+      .pstep.step-1 .pstep-left, .pstep.step-1 .pstep-right {
+        border-color: rgba(66,214,195,0.22);
+        background: linear-gradient(145deg, rgba(66,214,195,0.07), transparent), #0d1318;
+      }
+      .pstep.step-1 .pstep-left:hover, .pstep.step-1 .pstep-right:hover {
+        border-color: rgba(66,214,195,0.5);
+        box-shadow: 0 0 0 1px rgba(66,214,195,0.2), 0 16px 42px rgba(66,214,195,0.08);
+      }
+      /* step 2 card: violet */
+      .pstep.step-2 .pstep-left, .pstep.step-2 .pstep-right {
+        border-color: rgba(141,124,255,0.22);
+        background: linear-gradient(145deg, rgba(141,124,255,0.07), transparent), #0d1318;
+      }
+      .pstep.step-2 .pstep-left:hover, .pstep.step-2 .pstep-right:hover {
+        border-color: rgba(141,124,255,0.5);
+        box-shadow: 0 0 0 1px rgba(141,124,255,0.2), 0 16px 42px rgba(141,124,255,0.08);
+      }
+      /* step 3 card: teal/lime */
+      .pstep.step-3 .pstep-left, .pstep.step-3 .pstep-right {
+        border-color: rgba(213,243,111,0.24);
+        background: linear-gradient(145deg, rgba(66,214,195,0.06), rgba(213,243,111,0.05)), #0d1318;
+      }
+      .pstep.step-3 .pstep-left:hover, .pstep.step-3 .pstep-right:hover {
+        border-color: rgba(213,243,111,0.5);
+        box-shadow: 0 0 0 1px rgba(213,243,111,0.2), 0 16px 42px rgba(213,243,111,0.08);
+      }
+
+      /* Arrow connector in tail pointer */
+      .pstep-left::after {
+        content: '';
+        position: absolute;
+        right: -8px; top: 36px;
+        width: 14px; height: 14px;
+        background: inherit;
+        border-top: 1px solid;
+        border-right: 1px solid;
+        border-color: inherit;
+        transform: rotate(45deg);
+        border-radius: 0 4px 0 0;
+      }
+      .pstep-right::before {
+        content: '';
+        position: absolute;
+        left: -8px; top: 36px;
+        width: 14px; height: 14px;
+        background: inherit;
+        border-bottom: 1px solid;
+        border-left: 1px solid;
+        border-color: inherit;
+        transform: rotate(45deg);
+        border-radius: 0 0 0 4px;
+      }
+      .pstep.step-1 .pstep-left::after  { border-color: rgba(66,214,195,0.5); background: linear-gradient(145deg, rgba(66,214,195,0.07), #0d1318); }
+      .pstep.step-2 .pstep-left::after  { border-color: rgba(141,124,255,0.5); background: linear-gradient(145deg, rgba(141,124,255,0.07), #0d1318); }
+      .pstep.step-3 .pstep-left::after  { border-color: rgba(213,243,111,0.5); background: linear-gradient(145deg, rgba(66,214,195,0.06), #0d1318); }
+      .pstep.step-1 .pstep-right::before { border-color: rgba(66,214,195,0.5); background: linear-gradient(145deg, rgba(66,214,195,0.07), #0d1318); }
+      .pstep.step-2 .pstep-right::before { border-color: rgba(141,124,255,0.5); background: linear-gradient(145deg, rgba(141,124,255,0.07), #0d1318); }
+      .pstep.step-3 .pstep-right::before { border-color: rgba(213,243,111,0.5); background: linear-gradient(145deg, rgba(66,214,195,0.06), #0d1318); }
+
+      .pstep-node {
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+        padding: 12px 4px;
+        position: relative; z-index: 2;
+      }
+      .pnode-circle {
+        width: 48px; height: 48px; border-radius: 50%;
+        display: grid; place-items: center;
+        font-size: 15px; font-weight: 900; color: var(--navy);
+        position: relative;
+      }
+      .pstep.step-1 .pnode-circle { background: linear-gradient(135deg, var(--teal), var(--lime)); box-shadow: 0 0 24px rgba(66,214,195,0.5); }
+      .pstep.step-2 .pnode-circle { background: linear-gradient(135deg, var(--violet), var(--teal)); box-shadow: 0 0 24px rgba(141,124,255,0.5); }
+      .pstep.step-3 .pnode-circle { background: linear-gradient(135deg, var(--lime), var(--teal)); box-shadow: 0 0 24px rgba(213,243,111,0.4); }
+
+      /* Pulse ring on nodes */
+      .pnode-circle::after {
+        content: '';
+        position: absolute; inset: -6px; border-radius: 50%;
+        border: 1.5px solid currentColor;
+        opacity: 0;
+        animation: nodePulse 2.4s ease-out infinite;
+      }
+      .pstep.step-1 .pnode-circle::after { border-color: var(--teal); }
+      .pstep.step-2 .pnode-circle::after { border-color: var(--violet); animation-delay: 0.8s; }
+      .pstep.step-3 .pnode-circle::after { border-color: var(--lime); animation-delay: 1.6s; }
+      @keyframes nodePulse {
+        0%   { inset: -4px; opacity: 0.6; }
+        100% { inset: -16px; opacity: 0; }
+      }
+
+      .pstep-spacer { height: 24px; display: flex; align-items: center; justify-content: center; }
+
+      .pstep-label {
+        display: inline-flex; padding: 5px 10px; border-radius: 999px;
+        font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em;
+      }
+      .pstep.step-1 .pstep-label { background: rgba(66,214,195,0.12); color: var(--teal); }
+      .pstep.step-2 .pstep-label { background: rgba(141,124,255,0.12); color: var(--violet); }
+      .pstep.step-3 .pstep-label { background: rgba(213,243,111,0.12); color: var(--lime); }
+
+      .pstep-empty { /* spacer on alternating side */ }
+
+      .pstep h3 { font-size: 19px; line-height: 1.2; margin-bottom: 6px; }
+      .pstep p  { color: var(--muted); font-size: 14px; line-height: 1.55; margin: 0; }
+
+      /* arrow between steps */
+      .process-arrow {
+        display: flex; align-items: center; justify-content: center;
+        height: 36px; position: relative; z-index: 2;
+      }
+      .process-arrow svg { opacity: 0.35; }
+
+      /* Connector flow line */
+      .pstep-connector {
+        height: 28px;
+        display: flex; align-items: center; justify-content: center;
+        position: relative; z-index: 1;
+      }
+
+      /* ── Pricing ── */
+      .pricing-grid.compact-pricing {
+        display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
+        gap: 18px; max-width: 1080px; margin: 0 auto;
+      }
+      .price-card {
+        border-radius: 20px; padding: 28px;
+        background: #0e1317;
+        border: 1px solid rgba(255,255,255,0.09);
+        display: flex; flex-direction: column;
+        position: relative; overflow: visible;
+        transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+      }
+      .price-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+      .price-card.featured {
+        border-color: rgba(66,214,195,0.38);
+        background: linear-gradient(155deg, rgba(66,214,195,0.09), rgba(141,124,255,0.07)), #0e1317;
+      }
+      .price-card.featured:hover { box-shadow: 0 0 0 1px rgba(66,214,195,0.2), 0 20px 50px rgba(66,214,195,0.1); }
+
+      .price-label {
+        color: var(--teal); text-transform: uppercase;
+        letter-spacing: 0.12em; font-size: 11px; font-weight: 900; margin-bottom: 16px;
+      }
+      .price-card h3 { font-size: 26px; margin-bottom: 10px; }
+      .price { font-size: 40px; font-weight: 900; margin-bottom: 16px; }
+      .price span { color: var(--muted); font-size: 14px; font-weight: 600; }
+
+      .bonus-badge {
+        position: absolute; top: -14px; right: 20px;
+        display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+        min-height: 34px;
+        padding: 6px 12px 6px 8px;
+        border: 1px solid rgba(66,214,195,0.46);
+        border-radius: 999px;
+        background: linear-gradient(135deg, rgba(66,214,195,0.2), rgba(141,124,255,0.11)), rgba(12,16,22,0.8);
+        color: var(--paper); font-size: 12px; font-weight: 900; white-space: nowrap;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 8px 24px rgba(66,214,195,0.16);
+        pointer-events: none;
+        animation: badgeBob 3s ease-in-out infinite;
+      }
+      @keyframes badgeBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+      .bonus-badge::before {
+        content: '✦';
+        flex: 0 0 20px;
+        width: 20px; height: 20px; display: inline-grid; place-items: center;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--teal), var(--lime));
+        color: var(--navy); font-size: 10px; font-weight: 900;
+        line-height: 1;
+      }
+
+      .features {
+        list-style: none; padding: 0; margin: 0 0 22px;
+        color: var(--muted); display: grid; gap: 12px; line-height: 1.45;
+      }
+      .features.rtl-list { direction: rtl; text-align: right; }
+      .features li { display: grid; grid-template-columns: 20px 1fr; gap: 8px; }
+      .features li::before { content: '+'; color: var(--lime); font-weight: 900; }
+      .features.rtl-list li { display: block; padding-right: 18px; position: relative; }
+      .features.rtl-list li::before { position: absolute; right: 0; }
+
+      .price-card .button { margin-top: auto; width: 100%; justify-content: center; }
+
+      /* ── Lead Form ── */
+      .lead-section {
+        padding-top: 54px;
+      }
+
+      .lead-panel {
+        display: block;
+        max-width: 720px;
+      }
+
+      .lead-form {
+        display: grid;
+        gap: 18px;
+        border: 1px solid rgba(66,214,195,0.18);
+        border-radius: 24px;
+        background:
+          radial-gradient(circle at 8% 12%, rgba(66,214,195,0.13), transparent 34%),
+          linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025)),
+          #0d1318;
+        box-shadow: 0 28px 80px rgba(0,0,0,0.34);
+        padding: clamp(22px, 4vw, 34px);
+      }
+
+      .form-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        direction: rtl;
+      }
+
+      .form-head h2 {
+        font-size: clamp(26px, 4vw, 40px);
+        line-height: 1.08;
+      }
+
+      .live-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 34px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(66,214,195,0.34);
+        background: rgba(66,214,195,0.08);
+        color: var(--teal);
+        font-size: 12px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .live-badge::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--lime);
+        box-shadow: 0 0 14px rgba(213,243,111,0.74);
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .field {
+        display: grid;
+        gap: 7px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      .field label {
+        color: var(--paper);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        width: 100%;
+        min-height: 48px;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 14px;
+        background: rgba(255,255,255,0.045);
+        color: var(--ink);
+        outline: none;
+        padding: 12px 14px;
+        font-weight: 700;
+        transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      }
+
+      .field textarea {
+        min-height: 104px;
+        resize: vertical;
+      }
+
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        border-color: rgba(66,214,195,0.65);
+        background: rgba(66,214,195,0.06);
+        box-shadow: 0 0 0 3px rgba(66,214,195,0.12);
+      }
+
+      .field select option {
+        background: #0d1318;
+        color: var(--ink);
+      }
+
+      .form-note {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .form-status {
+        min-height: 22px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .form-status.success { color: var(--teal); }
+      .form-status.error { color: #ffb4b4; }
+
+      .form-submit {
+        display: grid;
+        gap: 10px;
+        grid-column: 1 / -1;
+      }
+
+      .form-submit .button {
+        width: 100%;
+        margin-top: 4px;
+      }
+
+      .hp-field {
+        position: absolute;
+        left: -10000px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* ── Final CTA ── */
+      .final-cta {
+        max-width: 820px; text-align: center;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 24px; background: #0e1317;
+        padding: clamp(32px,5vw,58px);
+        position: relative; overflow: hidden;
+        margin: 0 auto;
+      }
+      .final-cta::before {
+        content: '';
+        position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse at 50% 0%, rgba(66,214,195,0.14), transparent 60%);
+      }
+      .final-cta h2 { font-size: clamp(28px,4vw,52px); line-height: 1.18; margin-bottom: 6px; position: relative; }
+      .final-cta .button { margin-top: 8px; }
+
+      /* ── Footer ── */
+      footer {
+        padding: 36px 0; color: var(--muted);
+        border-top: 1px solid rgba(255,255,255,0.07);
+        font-size: 13px; position: relative; z-index: 1;
+      }
+      .footer-row { display: flex; justify-content: center; text-align: center; gap: 18px; flex-wrap: wrap; }
+
+      /* ── Responsive ── */
+      @media (max-width: 760px) {
+        .pricing-grid.compact-pricing { grid-template-columns: 1fr; }
+        .form-grid { grid-template-columns: 1fr; }
+        .form-head { align-items: flex-start; flex-direction: column; }
+
+        .process-diagram { max-width: 100%; }
+        .process-diagram::before { display: none; }
+        .pstep { grid-template-columns: 1fr; }
+        .pstep-left::after, .pstep-right::before { display: none; }
+        .pstep-empty,
+        .pstep-right[style] { display: none; }
+        .pstep-node {
+          order: 1;
+          flex-direction: row;
+          justify-content: center;
+          padding: 0;
+          margin-bottom: 14px;
+        }
+        .pstep-left,
+        .pstep-right {
+          order: 2;
+        }
+        .pstep-left {
+          border-radius: 16px;
+        }
+
+        h1 { max-width: 14ch; }
+        .section { padding: 64px 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="orbs" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="site-shell nav">
+        <div class="brand" aria-label="Upscale Agency">
+          <span class="brand-logo" aria-label="Upscale logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="88 72 470 170" focusable="false" role="img">
+              <path fill="currentColor" d="M159.472656 93.433594 159.34375 105.890625 159.21875 93.433594 112.542969 140.109375 112.542969 165.992188 159.34375 119.191406 206.148438 165.992188 206.148438 140.109375Z"/>
+              <path fill="currentColor" d="M179.394531 195.769531C179.394531 200.109375 170.914062 213.386719 158.878906 213.386719 146.839844 213.386719 138.363281 200.109375 138.363281 195.769531L138.363281 157.472656 123.296875 157.472656 123.296875 197.429688C123.296875 202.839844 131.90625 227.554688 158.878906 226.535156 185.851562 227.554688 194.457031 202.839844 194.457031 197.429688L194.457031 157.472656 179.394531 157.472656Z"/>
+              <text x="240" y="190" fill="currentColor" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="700">Upscale</text>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="site-shell hero-grid">
+          <div class="hero-copy-block reveal">
+            <p class="eyebrow">Ecommerce Video Editing</p>
+            <h1 lang="ar" dir="rtl">Produit عليك <br/> و Stratégie علينا</h1>
+            <p class="hero-copy rtl" lang="ar" dir="rtl">
+              خسرت برشا فلوس على Meta Ads و ملقيتش Résultats إلي تحب عليها؟
+            </p>
+          </div>
+
+          <aside class="player-stage hero-player reveal reveal-delay-1" aria-label="Video sales letter">
+            <div class="screen is-drive">
+              <iframe title="Upscale video sales letter"
+                src="https://drive.google.com/file/d/1bWcxRRq218cBvBvLq7ShzB6zuD_FF9Zi/preview"
+                allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>
+              </iframe>
+            </div>
+          </aside>
+          <div class="hero-actions">
+              <a class="button" href="#lead-form">
+                <span class="shimmer"></span>إبدا معانا
+              </a>
+              <a class="button secondary" href="#work">خدمتنا</a>
+            </div>
+        </div>
+      </section>
+
+      <!-- PORTFOLIO -->
+      <section class="section" id="work">
+        <div class="site-shell">
+          <div class="section-head centered reveal">
+            <p class="eyebrow">Portfolio</p>
+            <h2 lang="ar" dir="rtl">نوفروا Scripts و Video Editing باش تلقى أحسن Résulat</h2>
+          </div>
+          <div class="portfolio-groups" id="videoGrid" aria-label="Portfolio videos"></div>
+        </div>
+      </section>
+
+      <!-- PROCESS -->
+      <section class="section" id="process">
+        <div class="site-shell">
+          <div class="section-head centered reveal" lang="ar" dir="rtl">
+            <p class="eyebrow">من المنتج للـ creative</p>
+            <h2>خدمتنا في 3 خطوات</h2>
+            <p>إبعثلنا Produit  أو الفيديوهات، وإحنا نخدمولك creatives</p>
+          </div>
+
+          <!-- Visual diagram for 3 steps -->
+          <div class="process-diagram">
+
+            <!-- Step 1 -->
+            <div class="pstep step-1 reveal">
+              <div class="pstep-left" lang="ar" dir="rtl">
+                <span class="pstep-label">الهدف</span>
+                <h3>نفهمو المنتج و العرض</h3>
+                <p>نفهمو شنوا تحب تبيع و الزاوية إلي تنجم تشدّ العميل.</p>
+              </div>
+              <div class="pstep-node">
+                <div class="pnode-circle">01</div>
+              </div>
+              <div class="pstep-right" style="opacity:0;pointer-events:none;"></div>
+            </div>
+
+            <div class="pstep-connector">
+              <svg width="24" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 0 L12 22 M6 16 L12 23 L18 16" stroke="var(--violet)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="pstep step-2 reveal reveal-delay-1">
+              <div class="pstep-empty"></div>
+              <div class="pstep-node">
+                <div class="pnode-circle">02</div>
+              </div>
+              <div class="pstep-right" lang="ar" dir="rtl">
+                <span class="pstep-label">The Winning Script</span>
+                <h3>Script إلي يضمن البيوع</h3>
+                <p>نحللو الProduit و نخرجو Hooks و Scripts يضمنوا Conversion</p>
+              </div>
+            </div>
+
+            <div class="pstep-connector">
+              <svg width="24" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 0 L12 22 M6 16 L12 23 L18 16" stroke="var(--lime)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="pstep step-3 reveal reveal-delay-2">
+              <div class="pstep-left" lang="ar" dir="rtl">
+                <span class="pstep-label">المونتاج</span>
+                <h3>نحضّرو creatives جاهزة</h3>
+                <p>نركبو hooks، captions، rythme و CTA باش تنجم تستي على Meta.</p>
+              </div>
+              <div class="pstep-node">
+                <div class="pnode-circle">03</div>
+              </div>
+              <div class="pstep-right" style="opacity:0;pointer-events:none;"></div>
+            </div>
+
+          </div>
+
+          <div class="hero-actions process-actions reveal">
+            <a class="button" href="#lead-form">
+              <span class="shimmer"></span>إبدا معانا
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRICING -->
+      <section class="section" id="tarifs">
+        <div class="site-shell">
+          <div class="section-head centered reveal">
+            <p class="eyebrow">Packs</p>
+            <h2 lang="ar" dir="rtl">اختار Pack إلي يساعدك</h2>
+            <p lang="ar" dir="rtl">اعطينا Produit ولا Footage و خلي باقي علينا</p>
+          </div>
+          <div class="pricing-grid compact-pricing">
+            <article class="price-card reveal">
+              <div class="price-label">Starter</div>
+              <div class="bonus-badge">+3 Viral Hooks</div>
+              <h3>Flash Pack</h3>
+              <div class="price">450 DT <span>/ 5 creatives</span></div>
+              <ul class="features rtl-list" lang="ar" dir="rtl">
+                <li>5 فيديوهات قصيرة جاهزة للإعلانات</li>
+                <li>مونتاج، كابتشن و hooks أساسية</li>
+              </ul>
+              <a class="button secondary package-link" href="#lead-form" data-package="Flash Pack">نحب هذا</a>
+            </article>
+            <article class="price-card featured reveal reveal-delay-1">
+              <div class="price-label">Most popular</div>
+              <div class="bonus-badge">+3 Viral Hooks</div>
+              <h3>Growth Pack</h3>
+              <div class="price">800 DT <span>/ 10 creatives</span></div>
+              <ul class="features rtl-list" lang="ar" dir="rtl">
+                <li>10 فيديوهات قصيرة بزوايا مختلفة</li>
+                <li>أفضل اختيار لتست الإعلانات</li>
+              </ul>
+              <a class="button package-link" href="#lead-form" data-package="Growth Pack"><span class="shimmer"></span>Most popular</a>
+            </article>
+            <article class="price-card reveal reveal-delay-2">
+              <div class="price-label">Scale</div>
+              <div class="bonus-badge">+3 Viral Hooks</div>
+              <h3>Scale Pack</h3>
+              <div class="price">1400 DT <span>/ 20 creatives</span></div>
+              <ul class="features rtl-list" lang="ar" dir="rtl">
+                <li>20 فيديو قصير لحملة كاملة</li>
+                <li>تنويع hooks و CTA باش تستي أكثر</li>
+              </ul>
+              <a class="button secondary package-link" href="#lead-form" data-package="Scale Pack">منتوجك Upscale</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- LEAD FORM -->
+      <section class="section lead-section" id="lead-form">
+        <div class="site-shell lead-panel reveal">
+          <form class="lead-form" id="leadForm" lang="ar" dir="rtl">
+            <div class="form-head">
+              <h2>إبدا معانا</h2>
+              <span class="live-badge">Active 24/7</span>
+            </div>
+            <input class="hp-field" type="text" name="website" tabindex="-1" autocomplete="off">
+            <input type="hidden" id="leadPackage" name="package" value="">
+            <div class="form-grid">
+              <div class="field full">
+                <label for="leadName">اسمك ولا اسم البراند</label>
+                <input id="leadName" name="nameOrBrand" type="text" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="leadWhatsapp">نومرو الـ WhatsApp</label>
+                <input id="leadWhatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required>
+              </div>
+              <div class="field">
+                <label for="leadAvailability">وقتاش Disponible؟</label>
+                <select id="leadAvailability" name="availability" required>
+                  <option value="">اختار الوقت</option>
+                  <option>9h - 12h</option>
+                  <option>12h - 18h</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="leadReadyVideos">عندك فيديوهات حاضرة باش تتمنتج؟</label>
+                <select id="leadReadyVideos" name="hasReadyVideos" required>
+                  <option value="">اختار</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+              <div class="form-submit">
+                <button class="button" type="submit"><span class="shimmer"></span>نرسل الطلب</button>
+                <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="site-shell footer-row">
+        <span>(c) 2026 Upscale Agency. UGC, ecommerce video, w paid social creatives.</span>
+      </div>
+    </footer>
+
+    <script>
+      // ── Scroll reveal ──
+      const revealEls = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      revealEls.forEach(el => observer.observe(el));
+
+      // ── Portfolio ──
+      const videos = [
+        { group:"Short Form Ads", title:"Ad Short 01", tags:["Ecom ad","Meta","TikTok"],
+          url:"https://drive.google.com/file/d/1pTY3BBSlc0m65qdYh00h6mdWp4CkCzOy/view?usp=drive_link" },
+        { group:"Short Form Ads", title:"Ad Short 02", tags:["Product ad","Testing","Vertical"],
+          url:"https://drive.google.com/file/d/1EeJuZcm49-SQMBBHhTeCIn9W2RjLUkCS/view?usp=drive_link" },
+        { group:"Short Form Ads", title:"Ad Short 03", tags:["Hook","Benefit","CTA"],
+          url:"https://drive.google.com/file/d/1EuaOsOEworgske7_aFb5HkK0RcJnOUvo/view?usp=drive_link" },
+      ];
+
+      function getDriveId(url) {
+        const m = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+        return m ? m[1] : '';
+      }
+
+      function renderCards() {
+        const grid = document.querySelector('#videoGrid');
+        const groups = [...new Set(videos.map(v => v.group))];
+        grid.innerHTML = groups.map(group => {
+          const cards = videos.filter(v => v.group === group).map(v => {
+            const id = getDriveId(v.url);
+            const src = id ? `https://drive.google.com/file/d/${id}/preview` : '';
+            return `<article class="video-card reveal">
+              <div class="video-embed">${src ? `<iframe title="${v.title}" src="${src}" allow="autoplay;fullscreen;picture-in-picture" allowfullscreen loading="lazy"></iframe>` : '<div style="position:absolute;inset:0;display:grid;place-items:center;color:var(--muted)">Coming soon</div>'}</div>
+            </article>`;
+          }).join('');
+          return `<section class="video-group"><h3 class="video-group-title">${group}</h3><div class="video-grid">${cards}</div></section>`;
+        }).join('');
+        // re-observe new cards
+        document.querySelectorAll('.video-card.reveal').forEach(el => observer.observe(el));
+      }
+      renderCards();
+
+      // ── Lead form + future Pixel hooks ──
+      const leadForm = document.querySelector('#leadForm');
+      const formStatus = document.querySelector('#formStatus');
+      const packageSelect = document.querySelector('#leadPackage');
+      let formStarted = false;
+
+      function trackLeadEvent(eventName, payload = {}) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: eventName, ...payload });
+
+        if (typeof window.fbq === 'function') {
+          const metaEvent = eventName === 'lead_submit_success' ? 'Lead' : eventName;
+          window.fbq('track', metaEvent, payload);
+        }
+      }
+
+      document.querySelectorAll('.package-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (packageSelect && link.dataset.package) {
+            packageSelect.value = link.dataset.package;
+          }
+        });
+      });
+
+      leadForm?.addEventListener('focusin', () => {
+        if (!formStarted) {
+          formStarted = true;
+          trackLeadEvent('lead_form_start');
+        }
+      });
+
+      leadForm?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const submitButton = leadForm.querySelector('button[type="submit"]');
+        const payload = Object.fromEntries(new FormData(leadForm).entries());
+
+        formStatus.className = 'form-status';
+        formStatus.textContent = 'قاعدين نبعثو الطلب...';
+        submitButton.disabled = true;
+
+        try {
+          const response = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ...payload,
+              page: window.location.href,
+              submittedAt: new Date().toISOString()
+            })
+          });
+
+          const result = await response.json().catch(() => ({}));
+
+          if (!response.ok) {
+            throw new Error(result.error || 'Submission failed');
+          }
+
+          trackLeadEvent('lead_submit_success', {
+            package: payload.package || 'unknown',
+            availability: payload.availability || 'unknown',
+            hasReadyVideos: payload.hasReadyVideos || 'unknown'
+          });
+
+          leadForm.reset();
+          formStatus.className = 'form-status success';
+          formStatus.textContent = 'وصلنا طلبك. باش نرجعولك في أقرب وقت.';
+        } catch (error) {
+          formStatus.className = 'form-status error';
+          formStatus.textContent = 'صار مشكل في الإرسال. جرّب مرّة أخرى ولا ابعثولنا مباشرة.';
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
