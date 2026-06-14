@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Upscale Agency | UGC & Ads Ecommerce</title>
+    <title>Upscale Agency</title>
     <meta name="description" content="UGC videos, ads ecommerce, et contenu produit pour brands eli t7eb tbi3 online." />
     <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320"%3E%3Crect width="320" height="320" rx="64" fill="%23fffaf0"/%3E%3Cpath fill="%2302203e" d="M159.472656 93.433594 159.34375 105.890625 159.21875 93.433594 112.542969 140.109375 112.542969 165.992188 159.34375 119.191406 206.148438 165.992188 206.148438 140.109375Z"/%3E%3Cpath fill="%2302203e" d="M179.394531 195.769531C179.394531 200.109375 170.914062 213.386719 158.878906 213.386719 146.839844 213.386719 138.363281 200.109375 138.363281 195.769531L138.363281 157.472656 123.296875 157.472656 123.296875 197.429688C123.296875 202.839844 131.90625 227.554688 158.878906 226.535156 185.851562 227.554688 194.457031 202.839844 194.457031 197.429688L194.457031 157.472656 179.394531 157.472656Z"/%3E%3C/svg%3E' />
     <style>
@@ -517,6 +517,154 @@
 
       .price-card .button { margin-top: auto; width: 100%; justify-content: center; }
 
+      /* ── Lead Form ── */
+      .lead-section {
+        padding-top: 54px;
+      }
+
+      .lead-panel {
+        display: block;
+        max-width: 720px;
+      }
+
+      .lead-form {
+        display: grid;
+        gap: 18px;
+        border: 1px solid rgba(66,214,195,0.18);
+        border-radius: 24px;
+        background:
+          radial-gradient(circle at 8% 12%, rgba(66,214,195,0.13), transparent 34%),
+          linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025)),
+          #0d1318;
+        box-shadow: 0 28px 80px rgba(0,0,0,0.34);
+        padding: clamp(22px, 4vw, 34px);
+      }
+
+      .form-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        direction: rtl;
+      }
+
+      .form-head h2 {
+        font-size: clamp(26px, 4vw, 40px);
+        line-height: 1.08;
+      }
+
+      .live-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 34px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(66,214,195,0.34);
+        background: rgba(66,214,195,0.08);
+        color: var(--teal);
+        font-size: 12px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .live-badge::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--lime);
+        box-shadow: 0 0 14px rgba(213,243,111,0.74);
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .field {
+        display: grid;
+        gap: 7px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      .field label {
+        color: var(--paper);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        width: 100%;
+        min-height: 48px;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 14px;
+        background: rgba(255,255,255,0.045);
+        color: var(--ink);
+        outline: none;
+        padding: 12px 14px;
+        font-weight: 700;
+        transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      }
+
+      .field textarea {
+        min-height: 104px;
+        resize: vertical;
+      }
+
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        border-color: rgba(66,214,195,0.65);
+        background: rgba(66,214,195,0.06);
+        box-shadow: 0 0 0 3px rgba(66,214,195,0.12);
+      }
+
+      .field select option {
+        background: #0d1318;
+        color: var(--ink);
+      }
+
+      .form-note {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .form-status {
+        min-height: 22px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .form-status.success { color: var(--teal); }
+      .form-status.error { color: #ffb4b4; }
+
+      .form-submit {
+        display: grid;
+        gap: 10px;
+        grid-column: 1 / -1;
+      }
+
+      .form-submit .button {
+        width: 100%;
+        margin-top: 4px;
+      }
+
+      .hp-field {
+        position: absolute;
+        left: -10000px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
       /* ── Final CTA ── */
       .final-cta {
         max-width: 820px; text-align: center;
@@ -545,6 +693,8 @@
       /* ── Responsive ── */
       @media (max-width: 760px) {
         .pricing-grid.compact-pricing { grid-template-columns: 1fr; }
+        .form-grid { grid-template-columns: 1fr; }
+        .form-head { align-items: flex-start; flex-direction: column; }
 
         .process-diagram { max-width: 100%; }
         .process-diagram::before { display: none; }
@@ -598,17 +748,11 @@
       <section class="hero">
         <div class="site-shell hero-grid">
           <div class="hero-copy-block reveal">
-            <p class="eyebrow">UGC &amp; ads ecommerce</p>
+            <p class="eyebrow">Ecommerce Video Editing</p>
             <h1 lang="ar" dir="rtl">Produit عليك <br/> و Stratégie علينا</h1>
             <p class="hero-copy rtl" lang="ar" dir="rtl">
-              خسرت برشا فلوس على Meta Ads و ملقيتش الريزلتا إلي تحب عليها؟
+              خسرت برشا فلوس على Meta Ads و ملقيتش Résultats إلي تحب عليها؟
             </p>
-            <div class="hero-actions">
-              <a class="button" href="https://docs.google.com/forms/d/e/1FAIpQLSdPMF3_No2WP6iSrcizTPnc5nK-spKzr0x20QYnX8nisiNdUQ/viewform?usp=publish-editor" target="_blank" rel="noopener">
-                <span class="shimmer"></span>إبدا معانا
-              </a>
-              <a class="button secondary" href="#work">خدمتنا</a>
-            </div>
           </div>
 
           <aside class="player-stage hero-player reveal reveal-delay-1" aria-label="Video sales letter">
@@ -619,6 +763,12 @@
               </iframe>
             </div>
           </aside>
+          <div class="hero-actions">
+              <a class="button" href="#lead-form">
+                <span class="shimmer"></span>إبدا معانا
+              </a>
+              <a class="button secondary" href="#work">خدمتنا</a>
+            </div>
         </div>
       </section>
 
@@ -628,7 +778,6 @@
           <div class="section-head centered reveal">
             <p class="eyebrow">Portfolio</p>
             <h2 lang="ar" dir="rtl">نوفروا Scripts و Video Editing باش تلقى أحسن Résulat</h2>
-            <p>Short-form ads, UGC shorts, et product stories.</p>
           </div>
           <div class="portfolio-groups" id="videoGrid" aria-label="Portfolio videos"></div>
         </div>
@@ -640,7 +789,7 @@
           <div class="section-head centered reveal" lang="ar" dir="rtl">
             <p class="eyebrow">من المنتج للـ creative</p>
             <h2>خدمتنا في 3 خطوات</h2>
-            <p>إبعثلنا المنتج أو الفيديوهات، وإحنا نخدمولك creatives</p>
+            <p>إبعثلنا Produit  أو الفيديوهات، وإحنا نخدمولك creatives</p>
           </div>
 
           <!-- Visual diagram for 3 steps -->
@@ -673,7 +822,7 @@
               </div>
               <div class="pstep-right" lang="ar" dir="rtl">
                 <span class="pstep-label">The Winning Script</span>
-                <h3>سكريبت إلي يضمن البيوع</h3>
+                <h3>Script إلي يضمن البيوع</h3>
                 <p>نحللو الProduit و نخرجو Hooks و Scripts يضمنوا Conversion</p>
               </div>
             </div>
@@ -689,7 +838,7 @@
               <div class="pstep-left" lang="ar" dir="rtl">
                 <span class="pstep-label">المونتاج</span>
                 <h3>نحضّرو creatives جاهزة</h3>
-                <p>نركبو hooks، captions، rythme و CTA باش تنجم تستي على Meta و TikTok.</p>
+                <p>نركبو hooks، captions، rythme و CTA باش تنجم تستي على Meta.</p>
               </div>
               <div class="pstep-node">
                 <div class="pnode-circle">03</div>
@@ -700,7 +849,7 @@
           </div>
 
           <div class="hero-actions process-actions reveal">
-            <a class="button" href="https://docs.google.com/forms/d/e/1FAIpQLSdPMF3_No2WP6iSrcizTPnc5nK-spKzr0x20QYnX8nisiNdUQ/viewform?usp=publish-editor" target="_blank" rel="noopener">
+            <a class="button" href="#lead-form">
               <span class="shimmer"></span>إبدا معانا
             </a>
           </div>
@@ -713,7 +862,7 @@
           <div class="section-head centered reveal">
             <p class="eyebrow">Packs</p>
             <h2 lang="ar" dir="rtl">اختار Pack إلي يساعدك</h2>
-            <p lang="ar" dir="rtl">اعطينا Produit ولا Footage و خلي الباقي علينا</p>
+            <p lang="ar" dir="rtl">اعطينا Produit ولا Footage و خلي باقي علينا</p>
           </div>
           <div class="pricing-grid compact-pricing">
             <article class="price-card reveal">
@@ -725,7 +874,7 @@
                 <li>5 فيديوهات قصيرة جاهزة للإعلانات</li>
                 <li>مونتاج، كابتشن و hooks أساسية</li>
               </ul>
-              <a class="button secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdPMF3_No2WP6iSrcizTPnc5nK-spKzr0x20QYnX8nisiNdUQ/viewform?usp=publish-editor" target="_blank" rel="noopener">نحب هذا</a>
+              <a class="button secondary package-link" href="#lead-form" data-package="Flash Pack">نحب هذا</a>
             </article>
             <article class="price-card featured reveal reveal-delay-1">
               <div class="price-label">Most popular</div>
@@ -736,7 +885,7 @@
                 <li>10 فيديوهات قصيرة بزوايا مختلفة</li>
                 <li>أفضل اختيار لتست الإعلانات</li>
               </ul>
-              <a class="button" href="https://docs.google.com/forms/d/e/1FAIpQLSdPMF3_No2WP6iSrcizTPnc5nK-spKzr0x20QYnX8nisiNdUQ/viewform?usp=publish-editor" target="_blank" rel="noopener"><span class="shimmer"></span>Most popular</a>
+              <a class="button package-link" href="#lead-form" data-package="Growth Pack"><span class="shimmer"></span>Most popular</a>
             </article>
             <article class="price-card reveal reveal-delay-2">
               <div class="price-label">Scale</div>
@@ -744,23 +893,56 @@
               <h3>Scale Pack</h3>
               <div class="price">1400 DT <span>/ 20 creatives</span></div>
               <ul class="features rtl-list" lang="ar" dir="rtl">
-                <li>20 فيديو قصار لحملة كاملة</li>
+                <li>20 فيديو قصير لحملة كاملة</li>
                 <li>تنويع hooks و CTA باش تستي أكثر</li>
               </ul>
-              <a class="button secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSdPMF3_No2WP6iSrcizTPnc5nK-spKzr0x20QYnX8nisiNdUQ/viewform?usp=publish-editor" target="_blank" rel="noopener">منتوجك Upscale</a>
+              <a class="button secondary package-link" href="#lead-form" data-package="Scale Pack">منتوجك Upscale</a>
             </article>
           </div>
         </div>
       </section>
 
-      <!-- CTA -->
-      <section class="section" id="contact">
-        <div class="site-shell final-cta reveal">
-          <p class="eyebrow">Ready bach t7assen el creatives?</p>
-          <h2>مالا فاش تستنى؟ أيا إبدا معانا</h2>
-          <a class="button" href="https://docs.google.com/forms/d/e/1FAIpQLSdPMF3_No2WP6iSrcizTPnc5nK-spKzr0x20QYnX8nisiNdUQ/viewform?usp=publish-editor" target="_blank" rel="noopener">
-            <span class="shimmer"></span>نحب نخدم معاكم
-          </a>
+      <!-- LEAD FORM -->
+      <section class="section lead-section" id="lead-form">
+        <div class="site-shell lead-panel reveal">
+          <form class="lead-form" id="leadForm" lang="ar" dir="rtl">
+            <div class="form-head">
+              <h2>إبدا معانا</h2>
+              <span class="live-badge">Active 24/7</span>
+            </div>
+            <input class="hp-field" type="text" name="website" tabindex="-1" autocomplete="off">
+            <input type="hidden" id="leadPackage" name="package" value="">
+            <div class="form-grid">
+              <div class="field full">
+                <label for="leadName">اسمك ولا اسم البراند</label>
+                <input id="leadName" name="nameOrBrand" type="text" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="leadWhatsapp">نومرو الـ WhatsApp</label>
+                <input id="leadWhatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required>
+              </div>
+              <div class="field">
+                <label for="leadAvailability">وقتاش Disponible؟</label>
+                <select id="leadAvailability" name="availability" required>
+                  <option value="">اختار الوقت</option>
+                  <option>9h - 12h</option>
+                  <option>12h - 18h</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="leadReadyVideos">عندك فيديوهات حاضرة باش تتمنتج؟</label>
+                <select id="leadReadyVideos" name="hasReadyVideos" required>
+                  <option value="">اختار</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+              <div class="form-submit">
+                <button class="button" type="submit"><span class="shimmer"></span>نرسل الطلب</button>
+                <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+              </div>
+            </div>
+          </form>
         </div>
       </section>
     </main>
@@ -811,6 +993,80 @@
         document.querySelectorAll('.video-card.reveal').forEach(el => observer.observe(el));
       }
       renderCards();
+
+      // ── Lead form + future Pixel hooks ──
+      const leadForm = document.querySelector('#leadForm');
+      const formStatus = document.querySelector('#formStatus');
+      const packageSelect = document.querySelector('#leadPackage');
+      let formStarted = false;
+
+      function trackLeadEvent(eventName, payload = {}) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: eventName, ...payload });
+
+        if (typeof window.fbq === 'function') {
+          const metaEvent = eventName === 'lead_submit_success' ? 'Lead' : eventName;
+          window.fbq('track', metaEvent, payload);
+        }
+      }
+
+      document.querySelectorAll('.package-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (packageSelect && link.dataset.package) {
+            packageSelect.value = link.dataset.package;
+          }
+        });
+      });
+
+      leadForm?.addEventListener('focusin', () => {
+        if (!formStarted) {
+          formStarted = true;
+          trackLeadEvent('lead_form_start');
+        }
+      });
+
+      leadForm?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const submitButton = leadForm.querySelector('button[type="submit"]');
+        const payload = Object.fromEntries(new FormData(leadForm).entries());
+
+        formStatus.className = 'form-status';
+        formStatus.textContent = 'قاعدين نبعثو الطلب...';
+        submitButton.disabled = true;
+
+        try {
+          const response = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ...payload,
+              page: window.location.href,
+              submittedAt: new Date().toISOString()
+            })
+          });
+
+          const result = await response.json().catch(() => ({}));
+
+          if (!response.ok) {
+            throw new Error(result.error || 'Submission failed');
+          }
+
+          trackLeadEvent('lead_submit_success', {
+            package: payload.package || 'unknown',
+            availability: payload.availability || 'unknown',
+            hasReadyVideos: payload.hasReadyVideos || 'unknown'
+          });
+
+          leadForm.reset();
+          formStatus.className = 'form-status success';
+          formStatus.textContent = 'وصلنا طلبك. باش نرجعولك في أقرب وقت.';
+        } catch (error) {
+          formStatus.className = 'form-status error';
+          formStatus.textContent = 'صار مشكل في الإرسال. جرّب مرّة أخرى ولا ابعثولنا مباشرة.';
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
     </script>
   </body>
 </html>
