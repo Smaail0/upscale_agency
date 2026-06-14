@@ -96,6 +96,41 @@ module.exports = async function handler(req, res) {
       );
     }
 
+    const webhookText = await webhookResponse.text().catch(() => "");
+    let webhookPayload = null;
+
+    try {
+      webhookPayload = webhookText ? JSON.parse(webhookText) : null;
+    } catch (error) {
+      console.error("Lead webhook returned non-JSON response:", {
+        response: webhookText.slice(0, 300)
+      });
+
+      return jsonError(
+        res,
+        502,
+        "WEBHOOK_INVALID_RESPONSE",
+        "Lead webhook returned an invalid response"
+      );
+    }
+
+    if (!webhookPayload || webhookPayload.ok !== true) {
+      console.error("Lead webhook returned an error payload:", webhookPayload);
+
+      return jsonError(
+        res,
+        502,
+        "WEBHOOK_ERROR_RESPONSE",
+        "Lead webhook did not confirm the submission",
+        {
+          webhookError:
+            webhookPayload && typeof webhookPayload.error === "string"
+              ? webhookPayload.error
+              : "Unknown webhook error"
+        }
+      );
+    }
+
     return res.status(200).json({ ok: true });
   } catch (error) {
     console.error("Lead submission error:", error);
