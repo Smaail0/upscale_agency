@@ -874,7 +874,7 @@
                 <li>5 فيديوهات قصيرة جاهزة للإعلانات</li>
                 <li>مونتاج، كابتشن و hooks أساسية</li>
               </ul>
-              <a class="button secondary package-link" href="#lead-form" data-package="Flash Pack">نحب هذا</a>
+              <a class="button secondary" href="#lead-form">نحب هذا</a>
             </article>
             <article class="price-card featured reveal reveal-delay-1">
               <div class="price-label">Most popular</div>
@@ -885,7 +885,7 @@
                 <li>10 فيديوهات قصيرة بزوايا مختلفة</li>
                 <li>أفضل اختيار لتست الإعلانات</li>
               </ul>
-              <a class="button package-link" href="#lead-form" data-package="Growth Pack"><span class="shimmer"></span>Most popular</a>
+              <a class="button" href="#lead-form"><span class="shimmer"></span>Most popular</a>
             </article>
             <article class="price-card reveal reveal-delay-2">
               <div class="price-label">Scale</div>
@@ -896,7 +896,7 @@
                 <li>20 فيديو قصير لحملة كاملة</li>
                 <li>تنويع hooks و CTA باش تستي أكثر</li>
               </ul>
-              <a class="button secondary package-link" href="#lead-form" data-package="Scale Pack">منتوجك Upscale</a>
+              <a class="button secondary" href="#lead-form">منتوجك Upscale</a>
             </article>
           </div>
         </div>
@@ -911,7 +911,6 @@
               <span class="live-badge">Active 24/7</span>
             </div>
             <input class="hp-field" type="text" name="website" tabindex="-1" autocomplete="off">
-            <input type="hidden" id="leadPackage" name="package" value="">
             <div class="form-grid">
               <div class="field full">
                 <label for="leadName">اسمك ولا اسم البراند</label>
@@ -997,7 +996,6 @@
       // ── Lead form + future Pixel hooks ──
       const leadForm = document.querySelector('#leadForm');
       const formStatus = document.querySelector('#formStatus');
-      const packageSelect = document.querySelector('#leadPackage');
       let formStarted = false;
 
       function trackLeadEvent(eventName, payload = {}) {
@@ -1009,14 +1007,6 @@
           window.fbq('track', metaEvent, payload);
         }
       }
-
-      document.querySelectorAll('.package-link').forEach(link => {
-        link.addEventListener('click', () => {
-          if (packageSelect && link.dataset.package) {
-            packageSelect.value = link.dataset.package;
-          }
-        });
-      });
 
       leadForm?.addEventListener('focusin', () => {
         if (!formStarted) {
@@ -1052,7 +1042,6 @@
           }
 
           trackLeadEvent('lead_submit_success', {
-            package: payload.package || 'unknown',
             availability: payload.availability || 'unknown',
             hasReadyVideos: payload.hasReadyVideos || 'unknown'
           });

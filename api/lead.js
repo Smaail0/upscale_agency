@@ -36,7 +36,6 @@ module.exports = async function handler(req, res) {
       whatsapp: clean(body.whatsapp),
       availability: clean(body.availability),
       hasReadyVideos: clean(body.hasReadyVideos),
-      package: clean(body.package),
       page: clean(body.page),
       submittedAt: clean(body.submittedAt) || new Date().toISOString(),
       userAgent: req.headers["user-agent"] || "",
