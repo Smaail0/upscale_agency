@@ -258,8 +258,8 @@
       }
 
       .video-card {
-        flex: 0 1 200px;
-        width: min(200px, 100%);
+        flex: 0 1 300px;
+        width: min(300px, 100%);
         border-radius: 18px; overflow: hidden;
         background: #0e1317;
         border: 1px solid rgba(255,255,255,0.09);
@@ -277,7 +277,7 @@
       .video-card:hover::after { opacity: 1; }
 
       .video-embed {
-        position: relative; aspect-ratio: 9/16; min-height: 340px;
+        position: relative; aspect-ratio: 9/16; min-height: 533px;
         background: #050709; overflow: hidden;
       }
       .video-embed.is-horizontal { aspect-ratio: 16/9; min-height: 210px; }
@@ -703,7 +703,7 @@
       /* ── Responsive ── */
       @media (max-width: 760px) {
         .pricing-grid.compact-pricing { grid-template-columns: 1fr; }
-        .video-card { flex-basis: min(320px, 100%); }
+        .video-card { flex-basis: min(360px, 100%); }
         .form-grid { grid-template-columns: 1fr; }
         .form-head { align-items: flex-start; flex-direction: column; }
 
