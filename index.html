@@ -990,19 +990,15 @@
         return m ? m[1] : '';
       }
 
-      function getDriveVideoSource(id) {
-        return `https://drive.google.com/uc?export=download&id=${id}`;
-      }
-
       function renderCards() {
         const grid = document.querySelector('#videoGrid');
         const groups = [...new Set(videos.map(v => v.group))];
         grid.innerHTML = groups.map(group => {
           const cards = videos.filter(v => v.group === group).map(v => {
             const id = getDriveId(v.url);
-            const src = id ? getDriveVideoSource(id) : '';
+            const src = id ? `https://drive.google.com/file/d/${id}/preview` : '';
             return `<article class="video-card reveal">
-              <div class="video-embed">${src ? `<video title="${v.title}" src="${src}" controls preload="metadata" playsinline></video>` : '<div style="position:absolute;inset:0;display:grid;place-items:center;color:var(--muted)">Coming soon</div>'}</div>
+              <div class="video-embed">${src ? `<iframe title="${v.title}" src="${src}" allow="autoplay;fullscreen;picture-in-picture" allowfullscreen loading="lazy"></iframe>` : '<div style="position:absolute;inset:0;display:grid;place-items:center;color:var(--muted)">Coming soon</div>'}</div>
             </article>`;
           }).join('');
           return `<section class="video-group"><h3 class="video-group-title">${group}</h3><div class="video-grid">${cards}</div></section>`;
