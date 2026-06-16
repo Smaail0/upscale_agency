@@ -249,9 +249,17 @@
         background: linear-gradient(90deg, var(--teal), var(--lime));
         box-shadow: 0 0 14px rgba(66,214,195,0.6);
       }
-      .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 18px; }
+      .video-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 18px;
+      }
 
       .video-card {
+        flex: 0 1 255px;
+        width: min(255px, 100%);
         border-radius: 18px; overflow: hidden;
         background: #0e1317;
         border: 1px solid rgba(255,255,255,0.09);
@@ -693,6 +701,7 @@
       /* ── Responsive ── */
       @media (max-width: 760px) {
         .pricing-grid.compact-pricing { grid-template-columns: 1fr; }
+        .video-card { flex-basis: min(320px, 100%); }
         .form-grid { grid-template-columns: 1fr; }
         .form-head { align-items: flex-start; flex-direction: column; }
 
