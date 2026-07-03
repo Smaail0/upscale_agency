@@ -56,7 +56,7 @@
           radial-gradient(circle at 50% 100%, rgba(213,243,111,0.05), transparent 30vw);
         filter: blur(18px);
         opacity: 0.42;
-        animation: edgeGlow 14s ease-in-out infinite alternate;
+        opacity: 0.36;
       }
 
       @keyframes edgeGlow {
@@ -69,24 +69,7 @@
       .orbs {
         position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
       }
-      .orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(90px);
-        opacity: 0;
-        animation: orbFloat 20s ease-in-out infinite;
-      }
-      .orb-1 { width: 600px; height: 600px; top: -10%; left: -10%; background: radial-gradient(circle, rgba(66,214,195,0.18), transparent 70%); animation-delay: 0s; }
-      .orb-2 { width: 700px; height: 700px; top: 20%; right: -15%; background: radial-gradient(circle, rgba(141,124,255,0.18), transparent 70%); animation-delay: -7s; }
-      .orb-3 { width: 500px; height: 500px; bottom: 10%; left: 20%; background: radial-gradient(circle, rgba(213,243,111,0.12), transparent 70%); animation-delay: -13s; }
-
-      @keyframes orbFloat {
-        0%   { opacity: 0; transform: translate(0,0) scale(1); }
-        10%  { opacity: 1; }
-        50%  { transform: translate(30px, -40px) scale(1.08); }
-        90%  { opacity: 1; }
-        100% { opacity: 0; transform: translate(0,0) scale(1); }
-      }
+      .orb { display: none; }
 
       a { color: inherit; text-decoration: none; }
       button, input, textarea { font: inherit; }
@@ -257,101 +240,10 @@
         border-bottom: 13px solid transparent;
         border-left: 20px solid currentColor;
       }
-      .drive-caption {
-        position: absolute;
-        right: 14px;
-        bottom: 12px;
-        border-radius: 999px;
-        padding: 7px 11px;
-        color: var(--paper);
-        background: rgba(8,11,14,0.68);
-        border: 1px solid rgba(255,255,255,0.12);
-        font-size: 12px;
-        font-weight: 900;
-        backdrop-filter: blur(10px);
-        z-index: 1;
-      }
       .drive-launcher:hover .drive-play {
         transform: translateY(-2px) scale(1.04);
         box-shadow: 0 0 0 4px rgba(66,214,195,0.14), 0 20px 50px rgba(0,0,0,0.42);
       }
-      .video-modal {
-        position: fixed;
-        inset: 0;
-        z-index: 100;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        background: rgba(4,6,8,0.82);
-        backdrop-filter: blur(18px);
-      }
-      .video-modal.is-open { display: flex; }
-      .video-modal-panel {
-        width: min(960px, 100%);
-        border-radius: 20px;
-        overflow: hidden;
-        border: 1px solid rgba(255,255,255,0.14);
-        background: #050709;
-        box-shadow: 0 34px 90px rgba(0,0,0,0.52);
-        position: relative;
-      }
-      .video-modal-panel.is-vertical {
-        width: min(430px, 100%);
-      }
-      .video-modal-frame {
-        position: relative;
-        aspect-ratio: 16/9;
-        background: #000;
-      }
-      .video-modal-panel.is-vertical .video-modal-frame {
-        aspect-ratio: 9/16;
-        max-height: 82vh;
-      }
-      .video-modal-frame video {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        background: #000;
-      }
-      .video-modal-fallback {
-        position: absolute;
-        inset: 0;
-        display: none;
-        place-items: center;
-        padding: 24px;
-        text-align: center;
-        background: rgba(5,7,9,0.92);
-        color: var(--paper);
-      }
-      .video-modal-fallback.is-visible {
-        display: grid;
-      }
-      .video-modal-fallback p {
-        color: var(--muted);
-        line-height: 1.5;
-        margin: 0 0 14px;
-      }
-      .video-modal-close {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        z-index: 2;
-        width: 38px;
-        height: 38px;
-        border: 1px solid rgba(255,255,255,0.16);
-        border-radius: 999px;
-        background: rgba(8,11,14,0.78);
-        color: var(--paper);
-        cursor: pointer;
-        font-size: 24px;
-        line-height: 1;
-        display: grid;
-        place-items: center;
-      }
-      body.modal-open { overflow: hidden; }
 
       /* ── Section base ── */
       .section {
@@ -844,12 +736,6 @@
       @media (max-width: 760px) {
         .pricing-grid.compact-pricing { grid-template-columns: 1fr; }
         .video-card { flex-basis: min(360px, 100%); }
-        .video-modal {
-          padding: 14px;
-        }
-        .video-modal-panel {
-          border-radius: 16px;
-        }
         .hero {
           padding: 42px 0 68px;
         }
@@ -932,14 +818,12 @@
               <a
                 class="drive-launcher"
                 href="https://drive.google.com/file/d/1eba6Jw130N96KJDY1hlHEEE2s09jPm_3/preview"
-                data-drive-preview="https://drive.google.com/file/d/1eba6Jw130N96KJDY1hlHEEE2s09jPm_3/preview"
-                data-drive-id="1eba6Jw130N96KJDY1hlHEEE2s09jPm_3"
-                data-video-ratio="horizontal"
+                target="_blank"
+                rel="noopener"
                 aria-label="Open Upscale video sales letter"
-                style="background-image: url('https://drive.google.com/thumbnail?id=1eba6Jw130N96KJDY1hlHEEE2s09jPm_3&sz=w1600');"
+                style="background-image: url('https://drive.google.com/thumbnail?id=1eba6Jw130N96KJDY1hlHEEE2s09jPm_3&sz=w1000');"
               >
                 <span class="drive-play" aria-hidden="true"></span>
-                <span class="drive-caption">Watch VSL</span>
               </a>
             </div>
           </aside>
@@ -1126,21 +1010,6 @@
       </section>
     </main>
 
-    <div class="video-modal" id="videoModal" aria-hidden="true">
-      <div class="video-modal-panel" role="dialog" aria-modal="true" aria-label="Video player">
-        <button class="video-modal-close" type="button" aria-label="Close video">&times;</button>
-        <div class="video-modal-frame">
-          <video id="videoModalPlayer" title="Upscale video player" controls playsinline preload="metadata"></video>
-          <div class="video-modal-fallback" id="videoModalFallback">
-            <div>
-              <p>Drive blocked in-page playback for this video.</p>
-              <a class="button" id="videoModalFallbackLink" href="#" target="_blank" rel="noopener">Open video</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <footer>
       <div class="site-shell footer-row">
         <span>(c) 2026 Upscale Agency. Ecommerce video.</span>
@@ -1179,7 +1048,7 @@
       }
 
       function getDriveThumbnailUrl(id) {
-        return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
+        return `https://drive.google.com/thumbnail?id=${id}&sz=w700`;
       }
 
       function renderCards() {
@@ -1191,7 +1060,7 @@
             const src = id ? getDrivePreviewUrl(id) : '';
             const thumb = id ? getDriveThumbnailUrl(id) : '';
             return `<article class="video-card reveal">
-              <div class="video-embed">${src ? `<a class="drive-launcher" href="${src}" data-drive-preview="${src}" data-drive-id="${id}" data-video-ratio="vertical" aria-label="Play ${v.title}" style="background-image:url('${thumb}')"><span class="drive-play" aria-hidden="true"></span><span class="drive-caption">Play video</span></a>` : '<div style="position:absolute;inset:0;display:grid;place-items:center;color:var(--muted)">Coming soon</div>'}</div>
+              <div class="video-embed">${src ? `<a class="drive-launcher" href="${src}" target="_blank" rel="noopener" aria-label="Open ${v.title}" style="background-image:url('${thumb}')"><span class="drive-play" aria-hidden="true"></span></a>` : '<div style="position:absolute;inset:0;display:grid;place-items:center;color:var(--muted)">Coming soon</div>'}</div>
             </article>`;
           }).join('');
           return `<section class="video-group"><h3 class="video-group-title">${group}</h3><div class="video-grid">${cards}</div></section>`;
@@ -1200,72 +1069,6 @@
         document.querySelectorAll('.video-card.reveal').forEach(el => observer.observe(el));
       }
       renderCards();
-
-      // In-page Drive player. Drive is loaded only after a click, so the page
-      // does not boot with multiple fragile Google iframes.
-      const videoModal = document.querySelector('#videoModal');
-      const videoModalPanel = document.querySelector('.video-modal-panel');
-      const videoModalPlayer = document.querySelector('#videoModalPlayer');
-      const videoModalFallback = document.querySelector('#videoModalFallback');
-      const videoModalFallbackLink = document.querySelector('#videoModalFallbackLink');
-      const videoModalClose = document.querySelector('.video-modal-close');
-
-      function getDriveMediaUrl(id) {
-        return `https://drive.google.com/uc?export=download&id=${id}`;
-      }
-
-      function setModalFallback(visible) {
-        videoModalFallback?.classList.toggle('is-visible', visible);
-      }
-
-      function openVideoModal({ id, preview, ratio }) {
-        if (!videoModal || !videoModalPlayer || !id) return;
-        videoModalPanel?.classList.toggle('is-vertical', ratio === 'vertical');
-        setModalFallback(false);
-        videoModalPlayer.src = getDriveMediaUrl(id);
-        videoModalPlayer.load();
-        videoModalPlayer.play().catch(() => {});
-        if (videoModalFallbackLink && preview) {
-          videoModalFallbackLink.href = preview;
-        }
-        videoModal.classList.add('is-open');
-        videoModal.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
-      }
-
-      function closeVideoModal() {
-        if (!videoModal || !videoModalPlayer) return;
-        videoModal.classList.remove('is-open');
-        videoModal.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
-        videoModalPlayer.pause();
-        videoModalPlayer.removeAttribute('src');
-        videoModalPlayer.load();
-        setModalFallback(false);
-      }
-
-      document.addEventListener('click', event => {
-        const launcher = event.target.closest('[data-drive-preview]');
-        if (!launcher) return;
-        event.preventDefault();
-        openVideoModal({
-          id: launcher.dataset.driveId,
-          preview: launcher.dataset.drivePreview,
-          ratio: launcher.dataset.videoRatio || 'horizontal'
-        });
-      });
-
-      videoModalPlayer?.addEventListener('error', () => {
-        setModalFallback(true);
-      });
-
-      videoModalClose?.addEventListener('click', closeVideoModal);
-      videoModal?.addEventListener('click', event => {
-        if (event.target === videoModal) closeVideoModal();
-      });
-      document.addEventListener('keydown', event => {
-        if (event.key === 'Escape') closeVideoModal();
-      });
 
       // ── Lead form + future Pixel hooks ──
       const leadForm = document.querySelector('#leadForm');
