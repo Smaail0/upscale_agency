@@ -296,17 +296,43 @@
         box-shadow: 0 34px 90px rgba(0,0,0,0.52);
         position: relative;
       }
+      .video-modal-panel.is-vertical {
+        width: min(430px, 100%);
+      }
       .video-modal-frame {
         position: relative;
         aspect-ratio: 16/9;
         background: #000;
       }
-      .video-modal-frame iframe {
+      .video-modal-panel.is-vertical .video-modal-frame {
+        aspect-ratio: 9/16;
+        max-height: 82vh;
+      }
+      .video-modal-frame video {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
-        border: 0;
+        object-fit: contain;
+        background: #000;
+      }
+      .video-modal-fallback {
+        position: absolute;
+        inset: 0;
+        display: none;
+        place-items: center;
+        padding: 24px;
+        text-align: center;
+        background: rgba(5,7,9,0.92);
+        color: var(--paper);
+      }
+      .video-modal-fallback.is-visible {
+        display: grid;
+      }
+      .video-modal-fallback p {
+        color: var(--muted);
+        line-height: 1.5;
+        margin: 0 0 14px;
       }
       .video-modal-close {
         position: absolute;
@@ -907,6 +933,8 @@
                 class="drive-launcher"
                 href="https://drive.google.com/file/d/1eba6Jw130N96KJDY1hlHEEE2s09jPm_3/preview"
                 data-drive-preview="https://drive.google.com/file/d/1eba6Jw130N96KJDY1hlHEEE2s09jPm_3/preview"
+                data-drive-id="1eba6Jw130N96KJDY1hlHEEE2s09jPm_3"
+                data-video-ratio="horizontal"
                 aria-label="Open Upscale video sales letter"
                 style="background-image: url('https://drive.google.com/thumbnail?id=1eba6Jw130N96KJDY1hlHEEE2s09jPm_3&sz=w1600');"
               >
@@ -1102,7 +1130,13 @@
       <div class="video-modal-panel" role="dialog" aria-modal="true" aria-label="Video player">
         <button class="video-modal-close" type="button" aria-label="Close video">&times;</button>
         <div class="video-modal-frame">
-          <iframe id="videoModalFrame" title="Upscale video player" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          <video id="videoModalPlayer" title="Upscale video player" controls playsinline preload="metadata"></video>
+          <div class="video-modal-fallback" id="videoModalFallback">
+            <div>
+              <p>Drive blocked in-page playback for this video.</p>
+              <a class="button" id="videoModalFallbackLink" href="#" target="_blank" rel="noopener">Open video</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1157,7 +1191,7 @@
             const src = id ? getDrivePreviewUrl(id) : '';
             const thumb = id ? getDriveThumbnailUrl(id) : '';
             return `<article class="video-card reveal">
-              <div class="video-embed">${src ? `<a class="drive-launcher" href="${src}" data-drive-preview="${src}" aria-label="Play ${v.title}" style="background-image:url('${thumb}')"><span class="drive-play" aria-hidden="true"></span><span class="drive-caption">Play video</span></a>` : '<div style="position:absolute;inset:0;display:grid;place-items:center;color:var(--muted)">Coming soon</div>'}</div>
+              <div class="video-embed">${src ? `<a class="drive-launcher" href="${src}" data-drive-preview="${src}" data-drive-id="${id}" data-video-ratio="vertical" aria-label="Play ${v.title}" style="background-image:url('${thumb}')"><span class="drive-play" aria-hidden="true"></span><span class="drive-caption">Play video</span></a>` : '<div style="position:absolute;inset:0;display:grid;place-items:center;color:var(--muted)">Coming soon</div>'}</div>
             </article>`;
           }).join('');
           return `<section class="video-group"><h3 class="video-group-title">${group}</h3><div class="video-grid">${cards}</div></section>`;
@@ -1170,30 +1204,59 @@
       // In-page Drive player. Drive is loaded only after a click, so the page
       // does not boot with multiple fragile Google iframes.
       const videoModal = document.querySelector('#videoModal');
-      const videoModalFrame = document.querySelector('#videoModalFrame');
+      const videoModalPanel = document.querySelector('.video-modal-panel');
+      const videoModalPlayer = document.querySelector('#videoModalPlayer');
+      const videoModalFallback = document.querySelector('#videoModalFallback');
+      const videoModalFallbackLink = document.querySelector('#videoModalFallbackLink');
       const videoModalClose = document.querySelector('.video-modal-close');
 
-      function openVideoModal(src) {
-        if (!videoModal || !videoModalFrame || !src) return;
-        videoModalFrame.src = src;
+      function getDriveMediaUrl(id) {
+        return `https://drive.google.com/uc?export=download&id=${id}`;
+      }
+
+      function setModalFallback(visible) {
+        videoModalFallback?.classList.toggle('is-visible', visible);
+      }
+
+      function openVideoModal({ id, preview, ratio }) {
+        if (!videoModal || !videoModalPlayer || !id) return;
+        videoModalPanel?.classList.toggle('is-vertical', ratio === 'vertical');
+        setModalFallback(false);
+        videoModalPlayer.src = getDriveMediaUrl(id);
+        videoModalPlayer.load();
+        videoModalPlayer.play().catch(() => {});
+        if (videoModalFallbackLink && preview) {
+          videoModalFallbackLink.href = preview;
+        }
         videoModal.classList.add('is-open');
         videoModal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
       }
 
       function closeVideoModal() {
-        if (!videoModal || !videoModalFrame) return;
+        if (!videoModal || !videoModalPlayer) return;
         videoModal.classList.remove('is-open');
         videoModal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
-        videoModalFrame.src = '';
+        videoModalPlayer.pause();
+        videoModalPlayer.removeAttribute('src');
+        videoModalPlayer.load();
+        setModalFallback(false);
       }
 
       document.addEventListener('click', event => {
         const launcher = event.target.closest('[data-drive-preview]');
         if (!launcher) return;
         event.preventDefault();
-        openVideoModal(launcher.dataset.drivePreview);
+        openVideoModal({
+          id: launcher.dataset.driveId,
+          preview: launcher.dataset.drivePreview,
+          ratio: launcher.dataset.videoRatio || 'horizontal'
+        });
+      });
+
+      videoModalPlayer?.addEventListener('error', () => {
+        setModalFallback(true);
       });
 
       videoModalClose?.addEventListener('click', closeVideoModal);
