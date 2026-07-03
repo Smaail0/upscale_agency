@@ -704,18 +704,20 @@
       @media (max-width: 760px) {
         .pricing-grid.compact-pricing { grid-template-columns: 1fr; }
         .video-card { flex-basis: min(360px, 100%); }
+        .hero {
+          padding: 42px 0 68px;
+        }
+        .hero-grid {
+          gap: 24px;
+        }
         .hero-player {
-          width: min(100%, 680px);
-          overflow: hidden;
+          width: 100%;
+          max-width: 100%;
+          border-radius: 16px;
         }
         .hero-player .screen {
           aspect-ratio: 16/9;
-        }
-        .hero-player .screen.is-drive iframe {
-          left: 50%;
-          width: 620px;
-          max-width: none;
-          transform: translateX(-50%);
+          border-radius: 16px;
         }
         .form-grid { grid-template-columns: 1fr; }
         .form-head { align-items: flex-start; flex-direction: column; }
