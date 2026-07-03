@@ -113,6 +113,12 @@
       }
       .button:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 0 0 3px rgba(66,214,195,0.2), 0 16px 40px rgba(0,0,0,0.3); }
       .button:hover::after { opacity: 1; }
+      .button:disabled {
+        cursor: not-allowed;
+        opacity: 0.72;
+        transform: none;
+      }
+      .button:disabled::after { opacity: 0; }
       .button.secondary {
         background: rgba(255,255,255,0.05); color: var(--ink);
         border-color: rgba(255,255,255,0.14);
@@ -531,6 +537,7 @@
           #0d1318;
         box-shadow: 0 28px 80px rgba(0,0,0,0.34);
         padding: clamp(22px, 4vw, 34px);
+        position: relative;
       }
 
       .form-head {
@@ -574,6 +581,10 @@
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 14px;
+        min-inline-size: 0;
+        padding: 0;
+        margin: 0;
+        border: 0;
       }
 
       .field {
@@ -640,6 +651,27 @@
       .form-status.success { color: var(--teal); }
       .form-status.error { color: #ffb4b4; }
 
+      .lead-form.is-complete {
+        border-color: rgba(66,214,195,0.42);
+        box-shadow:
+          0 0 0 1px rgba(66,214,195,0.12),
+          0 28px 80px rgba(0,0,0,0.34);
+      }
+
+      .lead-form.is-complete::after {
+        content: "تم إستلام الطلب";
+        position: absolute;
+        top: 14px;
+        left: 16px;
+        border: 1px solid rgba(66,214,195,0.3);
+        border-radius: 999px;
+        background: rgba(66,214,195,0.1);
+        color: var(--teal);
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
       .form-submit {
         display: grid;
         gap: 10px;
@@ -656,6 +688,80 @@
         left: -10000px;
         opacity: 0;
         pointer-events: none;
+      }
+
+      .success-pop {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: none;
+        place-items: center;
+        padding: 20px;
+        background:
+          radial-gradient(circle at 50% 38%, rgba(66,214,195,0.18), transparent 34%),
+          rgba(4,6,8,0.9);
+      }
+      .success-pop.is-open { display: grid; }
+      .success-card {
+        width: min(520px, 100%);
+        border-radius: 24px;
+        border: 1px solid rgba(66,214,195,0.36);
+        background:
+          radial-gradient(circle at 50% 0%, rgba(213,243,111,0.16), transparent 34%),
+          radial-gradient(circle at 20% 0%, rgba(66,214,195,0.16), transparent 42%),
+          #0d1318;
+        box-shadow:
+          0 0 0 1px rgba(66,214,195,0.12),
+          0 28px 90px rgba(0,0,0,0.56);
+        padding: clamp(30px, 5vw, 44px);
+        text-align: center;
+        position: relative;
+        animation: successIn 320ms cubic-bezier(.22,1,.36,1);
+      }
+      .success-icon {
+        width: 74px;
+        height: 74px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 16px;
+        background: linear-gradient(135deg, var(--teal), var(--lime));
+        color: var(--navy);
+        font-size: 34px;
+        font-weight: 900;
+        box-shadow: 0 0 0 8px rgba(66,214,195,0.1), 0 16px 38px rgba(66,214,195,0.22);
+      }
+      .success-card h2 {
+        font-size: clamp(30px, 5vw, 46px);
+        line-height: 1.15;
+        margin: 12px 0 8px;
+      }
+      .success-card p {
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 16px;
+      }
+      .success-close {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.14);
+        background: rgba(255,255,255,0.06);
+        color: var(--paper);
+        cursor: pointer;
+        font-size: 22px;
+        line-height: 1;
+      }
+      .success-pop .button {
+        margin-top: 20px;
+        min-width: 170px;
+      }
+      @keyframes successIn {
+        from { opacity: 0; transform: translateY(18px) scale(0.96); }
+        to { opacity: 1; transform: none; }
       }
 
       /* ── Final CTA ── */
@@ -923,7 +1029,7 @@
               <span class="live-badge">Active 24/7</span>
             </div>
             <input class="hp-field" type="text" name="website" tabindex="-1" autocomplete="off">
-            <div class="form-grid">
+            <fieldset class="form-grid" id="leadFields">
               <div class="field full">
                 <label for="leadName">اسمك ولا اسم البراند</label>
                 <input id="leadName" name="nameOrBrand" type="text" autocomplete="name" required>
@@ -949,14 +1055,25 @@
                 </select>
               </div>
               <div class="form-submit">
-                <button class="button" type="submit"><span class="shimmer"></span>نرسل الطلب</button>
+                <button class="button" type="submit"><span class="shimmer"></span><span class="button-label">نرسل الطلب</span></button>
                 <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
               </div>
-            </div>
+            </fieldset>
           </form>
         </div>
       </section>
     </main>
+
+    <div class="success-pop" id="leadSuccessModal" aria-hidden="true">
+      <div class="success-card" role="dialog" aria-modal="true" aria-labelledby="leadSuccessTitle" lang="ar" dir="rtl">
+        <button class="success-close" type="button" aria-label="Close">&times;</button>
+        <div class="success-icon" aria-hidden="true">✓</div>
+        <span class="live-badge">تم الإرسال</span>
+        <h2 id="leadSuccessTitle">وصلنا طلبك</h2>
+        <p>يعطيك الصحة. باش نراجعو التفاصيل و نرجعولك على WhatsApp في أقرب وقت.</p>
+        <button class="button" type="button" id="leadSuccessOk">تمام</button>
+      </div>
+    </div>
 
     <footer>
       <div class="site-shell footer-row">
@@ -1003,8 +1120,14 @@
 
       // ── Lead form + future Pixel hooks ──
       const leadForm = document.querySelector('#leadForm');
+      const leadFields = document.querySelector('#leadFields');
       const formStatus = document.querySelector('#formStatus');
+      const leadSuccessModal = document.querySelector('#leadSuccessModal');
+      const leadSuccessClose = document.querySelector('.success-close');
+      const leadSuccessOk = document.querySelector('#leadSuccessOk');
       let formStarted = false;
+      let submitInFlight = false;
+      let leadSubmitted = false;
 
       function trackLeadEvent(eventName, payload = {}) {
         window.dataLayer = window.dataLayer || [];
@@ -1025,12 +1148,18 @@
 
       leadForm?.addEventListener('submit', async (event) => {
         event.preventDefault();
+        if (submitInFlight || leadSubmitted) return;
+
         const submitButton = leadForm.querySelector('button[type="submit"]');
+        const submitLabel = submitButton.querySelector('.button-label');
         const payload = Object.fromEntries(new FormData(leadForm).entries());
 
+        submitInFlight = true;
         formStatus.className = 'form-status';
         formStatus.textContent = 'قاعدين نبعثو الطلب...';
-        submitButton.disabled = true;
+        leadFields.disabled = true;
+        leadForm.setAttribute('aria-busy', 'true');
+        submitLabel.textContent = 'قاعدين نبعثو...';
 
         try {
           const response = await fetch('/api/lead', {
@@ -1054,15 +1183,38 @@
             hasReadyVideos: payload.hasReadyVideos || 'unknown'
           });
 
-          leadForm.reset();
+          leadSubmitted = true;
+          leadForm.classList.add('is-complete');
+          leadForm.setAttribute('aria-busy', 'false');
           formStatus.className = 'form-status success';
           formStatus.textContent = 'وصلنا طلبك. باش نرجعولك في أقرب وقت.';
+          submitLabel.textContent = 'وصلنا طلبك';
+          leadSuccessModal?.classList.add('is-open');
+          leadSuccessModal?.setAttribute('aria-hidden', 'false');
+          leadSuccessOk?.focus();
         } catch (error) {
           formStatus.className = 'form-status error';
           formStatus.textContent = 'صار مشكل في الإرسال. جرّب مرّة أخرى ولا ابعثولنا مباشرة.';
+          leadFields.disabled = false;
+          leadForm.setAttribute('aria-busy', 'false');
+          submitLabel.textContent = 'نرسل الطلب';
         } finally {
-          submitButton.disabled = false;
+          submitInFlight = false;
         }
+      });
+
+      function closeLeadSuccessModal() {
+        leadSuccessModal?.classList.remove('is-open');
+        leadSuccessModal?.setAttribute('aria-hidden', 'true');
+      }
+
+      leadSuccessClose?.addEventListener('click', closeLeadSuccessModal);
+      leadSuccessOk?.addEventListener('click', closeLeadSuccessModal);
+      leadSuccessModal?.addEventListener('click', event => {
+        if (event.target === leadSuccessModal) closeLeadSuccessModal();
+      });
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') closeLeadSuccessModal();
       });
     </script>
   </body>
