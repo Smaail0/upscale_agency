@@ -252,28 +252,33 @@
         align-items: center;
         justify-content: center;
         padding: 18px;
-        background: rgba(4,6,8,0.82);
-        backdrop-filter: blur(18px);
+        background: rgba(4,6,8,0.9);
       }
       .drive-modal.is-open { display: flex; }
       .drive-modal-panel {
+        width: min(960px, calc(100vw - 36px));
+        max-height: calc(100vh - 36px);
+        aspect-ratio: 16/9;
         border-radius: 20px;
         overflow: hidden;
         border: 1px solid rgba(255,255,255,0.14);
         background: #050709;
-        box-shadow: 0 34px 90px rgba(0,0,0,0.52);
+        box-shadow: 0 24px 64px rgba(0,0,0,0.48);
         position: relative;
+      }
+      .drive-modal-panel.is-vertical {
+        width: min(430px, calc(100vw - 36px));
+        aspect-ratio: 9/16;
       }
       .drive-modal-viewport {
         width: 100%;
+        height: 100%;
         background: #000;
         overflow: hidden;
       }
       .drive-modal-scale {
-        width: 960px;
-        height: 540px;
-        transform: scale(var(--drive-scale, 1));
-        transform-origin: top left;
+        width: 100%;
+        height: 100%;
       }
       .drive-modal-scale iframe {
         width: 100%;
@@ -811,7 +816,12 @@
           padding: 12px;
         }
         .drive-modal-panel {
+          width: min(100%, calc(100vw - 24px));
           border-radius: 16px;
+        }
+        .drive-modal-panel.is-vertical {
+          width: min(430px, calc(100vw - 24px));
+          max-height: calc(100vh - 24px);
         }
         .form-grid { grid-template-columns: 1fr; }
         .form-head { align-items: flex-start; flex-direction: column; }
@@ -1143,44 +1153,19 @@
       }
       renderCards();
 
-      // Google Drive's mobile player breaks when the iframe is too narrow.
-      // Render it at a stable desktop size internally, then scale the whole
-      // iframe down to fit the current viewport.
+      // Keep Google Drive playback in-page while letting the iframe render
+      // at its real responsive size, so Drive controls stay readable.
       const driveModal = document.querySelector('#driveModal');
       const driveModalPanel = document.querySelector('#driveModalPanel');
-      const driveModalViewport = document.querySelector('#driveModalViewport');
-      const driveModalScale = document.querySelector('#driveModalScale');
       const driveModalFrame = document.querySelector('#driveModalFrame');
       const driveModalClose = document.querySelector('.drive-modal-close');
-      let activeDriveRatio = 'horizontal';
-
-      function resizeDriveModal() {
-        if (!driveModal?.classList.contains('is-open') || !driveModalPanel || !driveModalViewport || !driveModalScale) return;
-
-        const isVertical = activeDriveRatio === 'vertical';
-        const baseWidth = isVertical ? 760 : 960;
-        const baseHeight = isVertical ? 1351 : 540;
-        const maxWidth = Math.max(260, window.innerWidth - 28);
-        const maxHeight = Math.max(260, window.innerHeight * 0.82);
-        const scale = Math.min(maxWidth / baseWidth, maxHeight / baseHeight, 1);
-        const scaledWidth = Math.round(baseWidth * scale);
-        const scaledHeight = Math.round(baseHeight * scale);
-
-        driveModalPanel.style.width = `${scaledWidth}px`;
-        driveModalViewport.style.width = `${scaledWidth}px`;
-        driveModalViewport.style.height = `${scaledHeight}px`;
-        driveModalScale.style.width = `${baseWidth}px`;
-        driveModalScale.style.height = `${baseHeight}px`;
-        driveModalScale.style.setProperty('--drive-scale', scale);
-      }
 
       function openDriveModal(src, ratio = 'horizontal') {
-        if (!driveModal || !driveModalFrame || !src) return;
-        activeDriveRatio = ratio;
+        if (!driveModal || !driveModalPanel || !driveModalFrame || !src) return;
+        driveModalPanel.classList.toggle('is-vertical', ratio === 'vertical');
         driveModal.classList.add('is-open');
         driveModal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
-        resizeDriveModal();
         driveModalFrame.src = src;
       }
 
@@ -1206,7 +1191,6 @@
       document.addEventListener('keydown', event => {
         if (event.key === 'Escape') closeDriveModal();
       });
-      window.addEventListener('resize', resizeDriveModal);
 
       // ── Lead form + future Pixel hooks ──
       const leadForm = document.querySelector('#leadForm');
