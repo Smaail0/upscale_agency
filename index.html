@@ -704,6 +704,19 @@
       @media (max-width: 760px) {
         .pricing-grid.compact-pricing { grid-template-columns: 1fr; }
         .video-card { flex-basis: min(360px, 100%); }
+        .hero-player {
+          width: min(100%, 680px);
+          overflow: hidden;
+        }
+        .hero-player .screen {
+          aspect-ratio: 16/9;
+        }
+        .hero-player .screen.is-drive iframe {
+          left: 50%;
+          width: 620px;
+          max-width: none;
+          transform: translateX(-50%);
+        }
         .form-grid { grid-template-columns: 1fr; }
         .form-head { align-items: flex-start; flex-direction: column; }
 
