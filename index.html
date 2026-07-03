@@ -193,7 +193,8 @@
         position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000;
         border-radius: inherit; display: none;
       }
-      .screen.is-drive iframe { display: block; }
+      .screen.is-drive iframe,
+      .screen.is-embed iframe { display: block; }
       .screen.is-direct video { display: block; }
       .drive-launcher {
         position: absolute;
@@ -886,17 +887,14 @@
           </div>
 
           <aside class="player-stage hero-player reveal reveal-delay-1" aria-label="Video sales letter">
-            <div class="screen is-drive">
-              <a
-                class="drive-launcher"
-                href="https://drive.google.com/file/d/1eba6Jw130N96KJDY1hlHEEE2s09jPm_3/preview"
-                data-drive-preview="https://drive.google.com/file/d/1eba6Jw130N96KJDY1hlHEEE2s09jPm_3/preview"
-                data-video-ratio="horizontal"
-                aria-label="Open Upscale video sales letter"
-                style="background-image: url('https://drive.google.com/thumbnail?id=1eba6Jw130N96KJDY1hlHEEE2s09jPm_3&sz=w1000');"
-              >
-                <span class="drive-play" aria-hidden="true"></span>
-              </a>
+            <div class="screen is-embed">
+              <iframe
+                title="Upscale video sales letter"
+                src="https://player.vimeo.com/video/1206806943?badge=0&autopause=0&player_id=0&app_id=58479"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+              </iframe>
             </div>
           </aside>
           <div class="hero-actions">
